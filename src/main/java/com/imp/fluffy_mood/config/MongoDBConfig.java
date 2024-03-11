@@ -15,7 +15,7 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 @Configuration
 @RequiredArgsConstructor
 @EnableMongoAuditing
-@EnableMongoRepositories(basePackageClasses = com.imp.fluffy_mood.repository.SensorRepository.class)
+//@EnableMongoRepositories(basePackageClasses = com.imp.fluffy_mood.repository.SensorRepository.class)
 public class MongoDBConfig {
 
     private final MongoMappingContext mongoMappingContext;

@@ -1,12 +1,10 @@
 package com.imp.fluffy_mood.controller;
 
 import com.imp.fluffy_mood.dto.SensorDto;
-import com.imp.fluffy_mood.entity.Sensor;
+import com.imp.fluffy_mood.entity.Message;
 import com.imp.fluffy_mood.service.SensorService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/sensor")
@@ -19,8 +17,13 @@ public class SensorController {
     }
 
     @PostMapping("/insert")
-    public void login(@RequestBody SensorDto sensorDto) {
+    public void insert(@RequestBody SensorDto sensorDto) {
         sensorService.insert(sensorDto);
+    }
+
+    @GetMapping("/test")
+    public ResponseEntity<Message> test(@RequestBody SensorDto sensorDto) {
+        return sensorService.test(sensorDto);
     }
 
 
