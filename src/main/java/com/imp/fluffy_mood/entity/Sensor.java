@@ -2,8 +2,10 @@ package com.imp.fluffy_mood.entity;
 
 import com.imp.fluffy_mood.dto.SensorDto;
 import com.imp.fluffy_mood.dto.UserDto;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import com.imp.fluffy_mood.entity.converter.IntegerStringConverter;
+import com.imp.fluffy_mood.entity.converter.ListStringConverter;
+import com.imp.fluffy_mood.entity.pk.SensorPK;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -13,50 +15,59 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.data.mongodb.core.mapping.FieldType;
 
+import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
-@Document(collection = "sensor")
+@Table(name = "sensor")
+@Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Builder
-public class Sensor {
+@IdClass(SensorPK.class)
+public class Sensor implements Serializable {
 
     @Id
-    @Field(name = "_id", targetType = FieldType.OBJECT_ID)
-    private ObjectId id;
+    private String id; // 사용자 아이디 (e-mail)
 
-    @Field(name = "user")
-    private String user; // 사용자 ID
+    @Column(name = "illuminance")
+    @Convert(converter = IntegerStringConverter.class)
+    private List<Integer> illuminance; // 조도 센서
 
-    @Field(name = "illuminance")
-    private int illuminance; // 조도 센서
-
-    @Field(name = "screenState")
-    private Boolean screenState; // 화면 on/off
-
-    @Field(name = "pedometer")
+    @Column(name = "pedometer")
     private int pedometer; // 만보기
 
-    @Field(name = "latitude")
-    private Double latitude; // 위도
+    @Column(name = "screen_frequency")
+    private int screenFrequency; // 화면 빈도 수
 
-    @Field(name = "longitude")
-    private Double longitude; // 경도
+    @Column(name = "screen_duration")
+    private int screenDuration; // 화면 사용 시간
 
-    @Field(name = "timestamp")
-    private LocalDateTime timestamp; // 시간
+    @Column(name = "gps")
+    @Convert(converter = ListStringConverter.class)
+    private List<List<? extends Number>> gps; // gps
+
+    @Id
+    @Column(name = "timestamp")
+    private LocalDate timestamp; // 날짜
+
+    @Id
+    @Column(name = "hour")
+    private int hour; // 시간
 
     private SensorDto toDto() {
         return SensorDto.builder()
                 .id(id)
-                .user(user)
                 .illuminance(illuminance)
-                .screenState(screenState)
                 .pedometer(pedometer)
-                .latitude(latitude)
-                .longitude(longitude)
+                .screenFrequency(screenFrequency)
+                .screenDuration(screenDuration)
+                .gps(gps)
                 .timestamp(timestamp)
+                .hour(hour)
                 .build();
     }
 
