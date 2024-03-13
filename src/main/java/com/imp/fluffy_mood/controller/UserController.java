@@ -30,4 +30,9 @@ public class UserController {
     public ResponseEntity<?> idValidation(@RequestParam String id) {
         return userService.idValidation(id);
     }
+
+    @PutMapping("/change/{id}")
+    public ResponseEntity<Message> changeInfo(@PathVariable String id, @RequestBody UserDto userDto) {
+        return userService.changeInfo(id, userDto);
+    }
 }

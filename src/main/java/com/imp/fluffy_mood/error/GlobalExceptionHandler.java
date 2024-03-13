@@ -3,6 +3,7 @@ package com.imp.fluffy_mood.error;
 import com.imp.fluffy_mood.enums.StatusEnum;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.transaction.TransactionException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -25,6 +26,8 @@ public class GlobalExceptionHandler {
     @ExceptionHandler({
             MethodArgumentNotValidException.class,
             HttpMessageNotWritableException.class,
+            HttpMessageNotReadableException.class,
+            IllegalArgumentException.class,
             TransactionException.class
     })
     public ResponseEntity<ErrorResponse> badRequestException() {
