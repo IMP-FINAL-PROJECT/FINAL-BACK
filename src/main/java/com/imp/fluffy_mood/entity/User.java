@@ -39,6 +39,21 @@ public class User {
     @Column(name = "gender", nullable = false)
     private Character gender;
 
+    // 회원 정보 변경을 위한 update Method
+    public void update(UserDto userDto) {
+
+        if(userDto.getBirth() != null) {
+            this.birth = userDto.getBirth();
+        }
+        if(userDto.getName() != null) {
+            this.name = userDto.getName();
+        }
+        if(userDto.getGender() != null) {
+            this.gender = userDto.getGender();
+        }
+
+    }
+
     public UserDto toDto() {
         return UserDto.builder()
                 .id(id)

@@ -27,7 +27,7 @@ public class UserService {
             User user = jpaUserRepository.findById(userDto.getId()).orElse(null);
 
             // 로그인 성공
-            if (user != null && userDto.getPassword().equals(user.getPassword())) {
+            if (user != null && passwordEncoder.matches(userDto.getPassword(), user.getPassword())) {
                 message.setStatus(StatusEnum.OK.getStatusCode());
                 message.setResult(true);
                 message.setMessage("Success");
@@ -53,7 +53,7 @@ public class UserService {
     }
 
     // 아이디 중복 검사
-    public ResponseEntity<?> idValidation(String id) {
+    public ResponseEntity<Message> idValidation(String id) {
 
             Message message = new Message();
 
@@ -74,7 +74,7 @@ public class UserService {
     }
 
     // 회원가입
-    public ResponseEntity<?> register(UserDto userDto) {
+    public ResponseEntity<Message> register(UserDto userDto) {
 
             Message message = new Message();
 
@@ -100,6 +100,35 @@ public class UserService {
             }
 
             return ResponseEntity.ok(message);
+
+    }
+
+    // 사용자 정보 변경
+    public ResponseEntity<Message> changeInfo(String id, UserDto userDto) {
+
+        Message message = new Message();
+
+        User user = jpaUserRepository.findById(id).orElse(null);
+
+        if(user != null) {
+
+            user.update(userDto);
+
+            jpaUserRepository.save(user);
+
+            message.setStatus(StatusEnum.OK.getStatusCode());
+            message.setResult(true);
+            message.setMessage("Success");
+            message.setData(user);
+
+        } else {
+            message.setStatus(StatusEnum.BAD_REQUEST.getStatusCode());
+            message.setResult(true);
+            message.setMessage("Cannot Change");
+            message.setData(null);
+        }
+
+        return ResponseEntity.ok(message);
 
     }
 
