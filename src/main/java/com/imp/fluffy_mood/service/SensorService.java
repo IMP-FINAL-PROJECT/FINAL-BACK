@@ -10,8 +10,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
 @Service
@@ -24,7 +22,9 @@ public class SensorService {
 
         Message message = new Message();
 
-        if(sensorDto.getId() != null && sensorDto.getTimestamp() != null && sensorDto.getHour() != null) {
+        Sensor input = sensorRepository.findByIdAndTimestampAndHour(sensorDto.getId(), sensorDto.getTimestamp(), sensorDto.getHour());
+
+        if(input == null) {
 
             Sensor sensor = sensorDto.toEntity();
             sensorRepository.save(sensor);
