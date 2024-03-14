@@ -20,11 +20,26 @@ public class SensorService {
 
     private final SensorRepository sensorRepository;
 
-    public void insert(SensorDto sensorDto) {
+    public ResponseEntity<Message> insert(SensorDto sensorDto) {
 
-        Sensor sensor = sensorDto.toEntity();
+        Message message = new Message();
 
-        sensorRepository.save(sensor);
+        if(sensorDto.getId() != null && sensorDto.getTimestamp() != null && sensorDto.getHour() != null) {
+
+            Sensor sensor = sensorDto.toEntity();
+            sensorRepository.save(sensor);
+
+            message.setStatus(StatusEnum.OK.getStatusCode());
+            message.setResult(true);
+            message.setMessage("Success");
+
+        } else {
+            message.setStatus(StatusEnum.BAD_REQUEST.getStatusCode());
+            message.setResult(true);
+            message.setMessage("Failed Input Data.");
+        }
+
+        return ResponseEntity.ok(message);
 
     }
 
