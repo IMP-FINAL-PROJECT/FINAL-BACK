@@ -26,7 +26,7 @@ public class Sensor implements Serializable {
     @Id
     private String id; // 사용자 아이디 (e-mail)
 
-    @Column(name = "illuminance")
+    @Column(name = "illuminance", length = 500)
     @Convert(converter = IntegerStringConverter.class)
     private List<Integer> illuminance; // 조도 센서
 
@@ -39,7 +39,7 @@ public class Sensor implements Serializable {
     @Column(name = "screen_duration")
     private int screen_duration; // 화면 사용 시간
 
-    @Column(name = "gps")
+    @Column(name = "gps", length = 5000)
     @Convert(converter = ListStringConverter.class)
     private List<List<? extends Number>> gps; // gps
 
