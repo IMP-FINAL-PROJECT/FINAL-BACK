@@ -18,8 +18,8 @@ public class SensorController {
     }
 
     @PostMapping("/insert")
-    public void insert(@RequestBody SensorDto sensorDto) {
-        sensorService.insert(sensorDto);
+    public ResponseEntity<Message> insert(@RequestBody SensorDto sensorDto) {
+        return sensorService.insert(sensorDto);
     }
 
     @GetMapping("/test")
