@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -26,17 +27,35 @@ public class SensorService {
 
         if(input == null) {
 
-            Sensor sensor = sensorDto.toEntity();
-            sensorRepository.save(sensor);
+            sensorRepository.save(sensorDto.toEntity());
 
             message.setStatus(StatusEnum.OK.getStatusCode());
             message.setResult(true);
             message.setMessage("Success");
 
         } else {
-            message.setStatus(StatusEnum.BAD_REQUEST.getStatusCode());
+
+            SensorDto sensor = input.toDto();
+
+            List<Integer> illuminance = sensor.getIlluminance();
+            List<List<? extends Number>> gps = sensor.getGps();
+
+            sensor.setPedometer(sensor.getPedometer() + sensorDto.getPedometer());
+            sensor.setScreen_duration(sensor.getScreen_duration() + sensorDto.getScreen_duration());
+            sensor.setScreen_frequency(sensor.getScreen_frequency() + sensorDto.getScreen_frequency());
+
+            illuminance.addAll(sensorDto.getIlluminance());
+            sensor.setIlluminance(illuminance);
+
+            gps.addAll(sensorDto.getGps());
+            sensor.setGps(gps);
+
+            sensorRepository.save(sensor.toEntity());
+
+            message.setStatus(StatusEnum.OK.getStatusCode());
             message.setResult(true);
-            message.setMessage("Failed Input Data.");
+            message.setMessage("Update Data.");
+
         }
 
         return ResponseEntity.ok(message);
