@@ -51,7 +51,7 @@ public class Sensor implements Serializable {
     @Column(name = "hour")
     private int hour; // 시간
 
-    public SensorDto toDto() {
+    private SensorDto toDto() {
         return SensorDto.builder()
                 .id(id)
                 .illuminance(illuminance)
