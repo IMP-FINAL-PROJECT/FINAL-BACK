@@ -24,15 +24,25 @@ public class SensorController {
     public ResponseEntity<Message> insert(HttpServletRequest request, @RequestBody SensorDto sensorDto) {
         log.debug("Accessed IP : {}", request.getRemoteAddr());
         log.debug("id : {}, illuminance : {}, pedometer : {}, screen_frequency : {}, screen_duration : {}, gps : {}, timestamp : {}, hour : {}",
-                sensorDto.getId(), sensorDto.getIlluminance(), sensorDto.getPedometer(), sensorDto.getScreen_frequency(), sensorDto.getScreen_duration(), sensorDto.getTimestamp(), sensorDto.getHour());
-        return sensorService.insert(sensorDto);
+                sensorDto.getId(), sensorDto.getIlluminance(), sensorDto.getPedometer(), sensorDto.getScreen_frequency(), sensorDto.getScreen_duration(), sensorDto.getGps(), sensorDto.getTimestamp(), sensorDto.getHour());
+
+        ResponseEntity<Message> response = sensorService.insert(sensorDto);
+
+        log.debug("Data : {}", response.getBody());
+
+        return response;
     }
 
     @GetMapping("/test")
     public ResponseEntity<Message> test(HttpServletRequest request, @RequestBody SensorDto sensorDto) {
         log.debug("Accessed IP : {}", request.getRemoteAddr());
         log.debug("id : {}", sensorDto.getId());
-        return sensorService.test(sensorDto);
+
+        ResponseEntity<Message> response = sensorService.test(sensorDto);
+
+        log.debug("Data : {}", response.getBody());
+
+        return response;
     }
 
 
