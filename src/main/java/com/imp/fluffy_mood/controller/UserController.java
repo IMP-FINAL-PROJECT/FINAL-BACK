@@ -67,4 +67,17 @@ public class UserController {
 
         return response;
     }
+
+    @GetMapping("/information")
+    public ResponseEntity<Message> information(HttpServletRequest request, @RequestParam String id) {
+        log.debug("Accessed IP : {}", request.getRemoteAddr());
+        log.debug("id : {}", id);
+
+        ResponseEntity<Message> response = userService.information(id);
+
+        log.debug("Data : {}", response.getBody());
+
+        return response;
+    }
+
 }

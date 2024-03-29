@@ -57,7 +57,6 @@ public class User {
     public UserDto toDto() {
         return UserDto.builder()
                 .id(id)
-                .password(password)
                 .birth(birth)
                 .name(name)
                 .gender(gender)

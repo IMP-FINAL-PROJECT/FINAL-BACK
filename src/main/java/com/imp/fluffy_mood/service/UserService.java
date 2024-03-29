@@ -1,9 +1,11 @@
 package com.imp.fluffy_mood.service;
 
 import com.imp.fluffy_mood.dto.UserDto;
+import com.imp.fluffy_mood.entity.Happiness;
 import com.imp.fluffy_mood.entity.Message;
 import com.imp.fluffy_mood.entity.User;
 import com.imp.fluffy_mood.enums.StatusEnum;
+import com.imp.fluffy_mood.repository.HappinessRepository;
 import com.imp.fluffy_mood.repository.JpaUserRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -17,6 +19,7 @@ import org.springframework.stereotype.Service;
 public class UserService {
 
     private final JpaUserRepository jpaUserRepository;
+    private final HappinessRepository happinessRepository;
     private final BCryptPasswordEncoder passwordEncoder;
 
     // 로그인
@@ -28,10 +31,17 @@ public class UserService {
 
             // 로그인 성공
             if (user != null && passwordEncoder.matches(userDto.getPassword(), user.getPassword())) {
+
+                Happiness point = happinessRepository.findTopByIdOrderByTimestampDescHourDesc(userDto.getId());
+
+                UserDto userWithPoint = user.toDto();
+
+                userWithPoint.setPoint(point.getPoint());
+
                 message.setStatus(StatusEnum.OK.getStatusCode());
                 message.setResult(true);
                 message.setMessage("Success");
-                message.setData(user);
+                message.setData(userWithPoint);
             }
             // 사용자 존재 X
             else if(user == null){
@@ -130,6 +140,37 @@ public class UserService {
 
         return ResponseEntity.ok(message);
 
+    }
+
+    // 사용자 정보 조회
+    public ResponseEntity<Message> information(String id) {
+
+        Message message = new Message();
+
+        User user = jpaUserRepository.findById(id).orElse(null);
+
+        if(user != null) {
+
+            UserDto userWithPoint = user.toDto();
+
+            Happiness point = happinessRepository.findTopByIdOrderByTimestampDescHourDesc(id);
+
+            userWithPoint.setPoint(point.getPoint());
+
+            message.setStatus(StatusEnum.OK.getStatusCode());
+            message.setResult(true);
+            message.setMessage("Success");
+            message.setData(userWithPoint);
+        } else {
+
+            message.setStatus(StatusEnum.BAD_REQUEST.getStatusCode());
+            message.setResult(true);
+            message.setMessage("Can't get Data");
+            message.setData(null);
+
+        }
+
+        return ResponseEntity.ok(message);
     }
 
 }
