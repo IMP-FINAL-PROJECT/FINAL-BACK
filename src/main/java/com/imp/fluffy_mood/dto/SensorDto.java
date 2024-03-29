@@ -13,6 +13,7 @@ import java.util.List;
 @Builder
 public class SensorDto {
 
+    private int number;
     private String id; // 사용자 아이디 (e-mail)
     private List<Integer> illuminance; // 조도 센서
     private int pedometer; // 만보기
@@ -24,6 +25,7 @@ public class SensorDto {
 
     public Sensor toEntity() {
         return Sensor.builder()
+                .number(number)
                 .id(id)
                 .illuminance(illuminance)
                 .pedometer(pedometer)

@@ -3,7 +3,6 @@ package com.imp.fluffy_mood.service;
 import com.imp.fluffy_mood.dto.SensorDto;
 import com.imp.fluffy_mood.entity.Message;
 import com.imp.fluffy_mood.entity.Sensor;
-import com.imp.fluffy_mood.entity.pk.SensorPK;
 import com.imp.fluffy_mood.enums.StatusEnum;
 import com.imp.fluffy_mood.repository.SensorRepository;
 import lombok.RequiredArgsConstructor;
@@ -11,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -19,6 +17,7 @@ public class SensorService {
 
     private final SensorRepository sensorRepository;
 
+    // 센서 데이터 추가
     public ResponseEntity<Message> insert(SensorDto sensorDto) {
 
         Message message = new Message();
@@ -66,9 +65,7 @@ public class SensorService {
 
         Message message = new Message();
 
-        SensorPK user = new SensorPK(sensorDto.getId(), sensorDto.getTimestamp(), sensorDto.getHour());
-
-        Optional<Sensor> sensor = sensorRepository.findById(user);
+        Sensor sensor = sensorRepository.findByIdAndTimestampAndHour(sensorDto.getId(), sensorDto.getTimestamp(), sensorDto.getHour());
 
         message.setStatus(StatusEnum.OK.getStatusCode());
         message.setResult(true);

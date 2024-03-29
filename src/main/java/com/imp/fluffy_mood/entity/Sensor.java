@@ -20,10 +20,14 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Builder
-@IdClass(SensorPK.class)
+//@IdClass(SensorPK.class)
 public class Sensor implements Serializable {
 
     @Id
+    @Column(name = "number", nullable = false)
+    private int number;
+
+    @Column(name = "id")
     private String id; // 사용자 아이디 (e-mail)
 
     @Column(name = "illuminance", length = 500)
@@ -43,16 +47,15 @@ public class Sensor implements Serializable {
     @Convert(converter = ListStringConverter.class)
     private List<List<? extends Number>> gps; // gps
 
-    @Id
     @Column(name = "timestamp")
     private LocalDate timestamp; // 날짜
 
-    @Id
     @Column(name = "hour")
     private int hour; // 시간
 
     public SensorDto toDto() {
         return SensorDto.builder()
+                .number(number)
                 .id(id)
                 .illuminance(illuminance)
                 .pedometer(pedometer)
