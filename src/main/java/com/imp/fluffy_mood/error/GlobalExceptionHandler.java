@@ -1,6 +1,7 @@
 package com.imp.fluffy_mood.error;
 
 import com.imp.fluffy_mood.enums.StatusEnum;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -12,9 +13,8 @@ import org.springframework.http.converter.HttpMessageNotWritableException;
 
 import java.nio.file.AccessDeniedException;
 
-
-
 @RestControllerAdvice
+@Slf4j
 public class GlobalExceptionHandler {
 
     /*
@@ -48,8 +48,9 @@ public class GlobalExceptionHandler {
     @ExceptionHandler({
             Exception.class
     })
-    public ResponseEntity<ErrorResponse> handleException() {
+    public ResponseEntity<ErrorResponse> handleException(final Exception ex) {
         final ErrorResponse response = ErrorResponse.of(StatusEnum.INTERNAL_SERVER_ERROR);
+        log.error("error", ex);
         return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
