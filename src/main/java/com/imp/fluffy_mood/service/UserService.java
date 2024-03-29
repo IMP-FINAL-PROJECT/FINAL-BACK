@@ -32,16 +32,28 @@ public class UserService {
             // 로그인 성공
             if (user != null && passwordEncoder.matches(userDto.getPassword(), user.getPassword())) {
 
-                Happiness point = happinessRepository.findTopByIdOrderByTimestampDescHourDesc(userDto.getId());
-
                 UserDto userWithPoint = user.toDto();
 
-                userWithPoint.setPoint(point.getPoint());
+                Happiness point = happinessRepository.findTopByIdOrderByTimestampDescHourDesc(userDto.getId());
 
-                message.setStatus(StatusEnum.OK.getStatusCode());
-                message.setResult(true);
-                message.setMessage("Success");
-                message.setData(userWithPoint);
+                if(point == null) { // 사용자는 존재하나 행복 점수가 아예 없는 경우
+
+                    userWithPoint.setPoint(0);
+
+                    message.setStatus(StatusEnum.OK.getStatusCode());
+                    message.setResult(true);
+                    message.setMessage("Success with no point user.");
+                    message.setData(userWithPoint);
+                } else {
+
+                    userWithPoint.setPoint(point.getPoint());
+
+                    message.setStatus(StatusEnum.OK.getStatusCode());
+                    message.setResult(true);
+                    message.setMessage("Success");
+                    message.setData(userWithPoint);
+                }
+
             }
             // 사용자 존재 X
             else if(user == null){
