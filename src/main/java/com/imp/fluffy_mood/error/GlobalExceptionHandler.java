@@ -10,7 +10,6 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.http.converter.HttpMessageNotWritableException;
-
 import java.nio.file.AccessDeniedException;
 
 @RestControllerAdvice
@@ -30,8 +29,9 @@ public class GlobalExceptionHandler {
             IllegalArgumentException.class,
             TransactionException.class
     })
-    public ResponseEntity<ErrorResponse> badRequestException() {
+    public ResponseEntity<ErrorResponse> badRequestException(final Exception ex) {
         final ErrorResponse response = ErrorResponse.of(StatusEnum.BAD_REQUEST);
+        log.error("{} : {}", ex.getClass(), ex.getMessage());
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
@@ -39,8 +39,9 @@ public class GlobalExceptionHandler {
     @ExceptionHandler({
             AccessDeniedException.class
     })
-    public ResponseEntity<ErrorResponse> accessDeniedException() {
+    public ResponseEntity<ErrorResponse> accessDeniedException(final AccessDeniedException ex) {
         final ErrorResponse response = ErrorResponse.of(StatusEnum.UNAUTHORIZED);
+        log.error("{} : {}", ex.getClass(), ex.getMessage());
         return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
     }
 
@@ -50,7 +51,7 @@ public class GlobalExceptionHandler {
     })
     public ResponseEntity<ErrorResponse> handleException(final Exception ex) {
         final ErrorResponse response = ErrorResponse.of(StatusEnum.INTERNAL_SERVER_ERROR);
-        log.error("error", ex);
+        log.error("{} : {}", ex.getClass(), ex.getMessage());
         return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
