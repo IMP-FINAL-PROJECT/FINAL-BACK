@@ -22,7 +22,6 @@ public class HappinessDto {
                 .id(id)
                 .point(point)
                 .timestamp(timestamp)
-                .hour(hour)
                 .build();
     }
 }

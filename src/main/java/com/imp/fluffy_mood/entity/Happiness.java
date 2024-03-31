@@ -28,15 +28,11 @@ public class Happiness {
     @Id
     private LocalDate timestamp;
 
-    @Id
-    private int hour;
-
     public HappinessDto toDto() {
         return HappinessDto.builder()
                 .id(id)
                 .point(point)
                 .timestamp(timestamp)
-                .hour(hour)
                 .build();
     }
 

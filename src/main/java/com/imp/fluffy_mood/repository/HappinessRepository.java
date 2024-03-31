@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface HappinessRepository extends JpaRepository<Happiness, HappinessPK> {
 
-    Happiness findTopByIdOrderByTimestampDescHourDesc(String id);
+    Happiness findTopByIdOrderByTimestampDesc(String id);
 
 }
