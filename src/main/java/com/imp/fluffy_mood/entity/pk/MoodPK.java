@@ -5,14 +5,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class HappinessPK implements Serializable {
+public class MoodPK implements Serializable {
 
     private String id;
-    private LocalDate timestamp;
+    private LocalDateTime timestamp;
 
 }

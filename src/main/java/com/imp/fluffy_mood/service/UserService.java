@@ -25,103 +25,87 @@ public class UserService {
     // 로그인
     public ResponseEntity<Message> login(UserDto userDto) {
 
-            Message message = new Message();
+        Message message = new Message();
 
-            User user = jpaUserRepository.findById(userDto.getId()).orElse(null);
+        User user = jpaUserRepository.findById(userDto.getId()).orElse(null);
 
-            // 로그인 성공
-            if (user != null && passwordEncoder.matches(userDto.getPassword(), user.getPassword())) {
+        // 로그인 성공
+        if (user != null && passwordEncoder.matches(userDto.getPassword(), user.getPassword())) {
 
-                UserDto userWithPoint = user.toDto();
 
-                Happiness point = happinessRepository.findTopByIdOrderByTimestampDescHourDesc(userDto.getId());
+            message.setStatus(StatusEnum.OK.getStatusCode());
+            message.setResult(true);
+            message.setMessage("Success");
+            message.setData(user);
+        }
 
-                if(point == null) { // 사용자는 존재하나 행복 점수가 아예 없는 경우
+        // 사용자 존재 X
+        else if (user == null) {
+            message.setStatus(StatusEnum.UNAUTHORIZED.getStatusCode());
+            message.setResult(false);
+            message.setMessage("No User");
+            message.setData(null);
+        }
+        // ID or Password 불일치
+        else {
+            message.setStatus(StatusEnum.UNAUTHORIZED.getStatusCode());
+            message.setResult(true);
+            message.setMessage("ID or password does not match");
+            message.setData(null);
+        }
 
-                    userWithPoint.setPoint(0);
-
-                    message.setStatus(StatusEnum.OK.getStatusCode());
-                    message.setResult(true);
-                    message.setMessage("Success with no point user.");
-                    message.setData(userWithPoint);
-                } else {
-
-                    userWithPoint.setPoint(point.getPoint());
-
-                    message.setStatus(StatusEnum.OK.getStatusCode());
-                    message.setResult(true);
-                    message.setMessage("Success");
-                    message.setData(userWithPoint);
-                }
-
-            }
-            // 사용자 존재 X
-            else if(user == null){
-                message.setStatus(StatusEnum.UNAUTHORIZED.getStatusCode());
-                message.setResult(false);
-                message.setMessage("No User");
-                message.setData(null);
-            }
-            // ID or Password 불일치
-            else {
-                message.setStatus(StatusEnum.UNAUTHORIZED.getStatusCode());
-                message.setResult(true);
-                message.setMessage("ID or password does not match");
-                message.setData(null);
-            }
-
-            return ResponseEntity.ok(message);
+        return ResponseEntity.ok(message);
 
     }
 
     // 아이디 중복 검사
     public ResponseEntity<Message> idValidation(String id) {
 
-            Message message = new Message();
+        Message message = new Message();
 
-            User user = jpaUserRepository.findById(id).orElse(null);
+        User user = jpaUserRepository.findById(id).orElse(null);
 
-            if(user == null) {
-                message.setStatus(StatusEnum.OK.getStatusCode());
-                message.setResult(true);
-                message.setMessage("Success");
-            } else {
-                message.setStatus(StatusEnum.CONFLICT.getStatusCode());
-                message.setResult(true);
-                message.setMessage("Duplicate ID.");
-            }
+        if (user == null) {
+            message.setStatus(StatusEnum.OK.getStatusCode());
+            message.setResult(true);
+            message.setMessage("Success");
+        } else {
+            message.setStatus(StatusEnum.CONFLICT.getStatusCode());
+            message.setResult(true);
+            message.setMessage("Duplicate ID.");
+        }
 
-            return ResponseEntity.ok(message);
+        return ResponseEntity.ok(message);
 
     }
 
     // 회원가입
     public ResponseEntity<Message> register(UserDto userDto) {
 
-            Message message = new Message();
+        Message message = new Message();
 
-            User user = jpaUserRepository.findById(userDto.getId()).orElse(null);
+        User user = jpaUserRepository.findById(userDto.getId()).orElse(null);
 
-            // DB에 사용자가 없으면 회원가입 성공
-            if (user == null) {
-                userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
-                User newUser = userDto.toEntity();
-                jpaUserRepository.save(newUser);
+        // DB에 사용자가 없으면 회원가입 성공
+        if (user == null) {
+            userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
+            User newUser = userDto.toEntity();
+            jpaUserRepository.save(newUser);
 
-                message.setStatus(StatusEnum.OK.getStatusCode());
-                message.setResult(true);
-                message.setMessage("Success");
-                message.setData(newUser);
-            }
-            // 회원가입 실패 시
-            else {
-                message.setStatus(StatusEnum.BAD_REQUEST.getStatusCode());
-                message.setResult(true);
-                message.setMessage("Cannot Register");
-                message.setData(null);
-            }
+            message.setStatus(StatusEnum.OK.getStatusCode());
+            message.setResult(true);
+            message.setMessage("Success");
+            message.setData(newUser);
+        }
+        // 회원가입 실패 시
+        else {
+            message.setStatus(StatusEnum.BAD_REQUEST.getStatusCode());
+            message.setResult(true);
+            message.setMessage("Cannot Register");
+            message.setData(null);
+        }
 
-            return ResponseEntity.ok(message);
+        return ResponseEntity.ok(message);
 
     }
 
@@ -132,7 +116,7 @@ public class UserService {
 
         User user = jpaUserRepository.findById(id).orElse(null);
 
-        if(user != null) {
+        if (user != null) {
 
             user.update(userDto);
 
@@ -161,18 +145,18 @@ public class UserService {
 
         User user = jpaUserRepository.findById(id).orElse(null);
 
-        if(user != null) {
+        if (user != null) {
 
-            UserDto userWithPoint = user.toDto();
+//            UserDto userWithPoint = user.toDto();
 
-            Happiness point = happinessRepository.findTopByIdOrderByTimestampDescHourDesc(id);
+//            Happiness point = happinessRepository.findTopByIdOrderByTimestampDesc(id);
 
-            userWithPoint.setPoint(point.getPoint());
+//            userWithPoint.setPoint(point.getPoint());
 
             message.setStatus(StatusEnum.OK.getStatusCode());
             message.setResult(true);
             message.setMessage("Success");
-            message.setData(userWithPoint);
+            message.setData(user);
         } else {
 
             message.setStatus(StatusEnum.BAD_REQUEST.getStatusCode());
