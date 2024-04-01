@@ -20,9 +20,7 @@ import org.springframework.stereotype.Service;
 public class UserService {
 
     private final JpaUserRepository jpaUserRepository;
-    private final SensorRepository sensorRepository;
     private final HappinessRepository happinessRepository;
-    private final MoodRepository moodRepository;
     private final BCryptPasswordEncoder passwordEncoder;
 
     // 로그인
@@ -150,12 +148,6 @@ public class UserService {
 
         if (user != null) {
 
-//            UserDto userWithPoint = user.toDto();
-
-//            Happiness point = happinessRepository.findTopByIdOrderByTimestampDesc(id);
-
-//            userWithPoint.setPoint(point.getPoint());
-
             message.setStatus(StatusEnum.OK.getStatusCode());
             message.setResult(true);
             message.setMessage("Success");
@@ -180,24 +172,14 @@ public class UserService {
 
         if(user != null) {
 
-            //Sensor sensor = sensorRepository.findTopByIdOrderByTimestampDescHourDesc(id);
             Happiness happiness = happinessRepository.findTopByIdOrderByTimestampDesc(id);
-            Mood mood = moodRepository.findTopByIdOrderByTimestampDesc(id);
 
             HomeDto homeDto = new HomeDto();
 
             homeDto.setId(id);
 
-            //if(sensor != null) {
-            //    homeDto.setGps(sensor.getGps());
-            //}
-
             if(happiness != null) {
                 homeDto.setPoint(happiness.getPoint());
-            }
-
-            if(mood != null) {
-                homeDto.setScore(mood.getScore());
             }
 
                 message.setStatus(StatusEnum.OK.getStatusCode());
