@@ -1,5 +1,6 @@
 package com.imp.fluffy_mood.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.imp.fluffy_mood.entity.Sensor;
 import lombok.*;
 
@@ -17,8 +18,10 @@ public class SensorDto {
     private String id; // 사용자 아이디 (e-mail)
     private List<Integer> illuminance; // 조도 센서
     private int pedometer; // 만보기
-    private int screen_frequency; // 화면 빈도 수
-    private int screen_duration; // 화면 사용 시간
+    @JsonProperty("screen_frequency")
+    private int screenFrequency; // 화면 빈도 수
+    @JsonProperty("screen_duration")
+    private int screenDuration; // 화면 사용 시간
     private List<List<? extends Number>> gps; // gps
     private LocalDate timestamp; // 날짜
     private int hour; // 시간
@@ -29,8 +32,8 @@ public class SensorDto {
                 .id(id)
                 .illuminance(illuminance)
                 .pedometer(pedometer)
-                .screen_frequency(screen_frequency)
-                .screen_duration(screen_duration)
+                .screenFrequency(screenFrequency)
+                .screenDuration(screenDuration)
                 .gps(gps)
                 .timestamp(timestamp)
                 .hour(hour)

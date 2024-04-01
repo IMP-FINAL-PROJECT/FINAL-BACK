@@ -40,8 +40,8 @@ public class SensorService {
             List<List<? extends Number>> gps = sensor.getGps();
 
             sensor.setPedometer(sensor.getPedometer() + sensorDto.getPedometer());
-            sensor.setScreen_duration(sensor.getScreen_duration() + sensorDto.getScreen_duration());
-            sensor.setScreen_frequency(sensor.getScreen_frequency() + sensorDto.getScreen_frequency());
+            sensor.setScreenDuration(sensor.getScreenDuration() + sensorDto.getScreenDuration());
+            sensor.setScreenFrequency(sensor.getScreenFrequency() + sensorDto.getScreenFrequency());
 
             illuminance.addAll(sensorDto.getIlluminance());
             sensor.setIlluminance(illuminance);
