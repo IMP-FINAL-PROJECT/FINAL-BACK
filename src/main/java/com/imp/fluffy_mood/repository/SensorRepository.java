@@ -10,5 +10,6 @@ import java.time.LocalDate;
 @Repository
 public interface SensorRepository extends JpaRepository<Sensor, Integer> {
 
+    Sensor findTopByIdOrderByTimestampDescHourDesc(String id);
     Sensor findByIdAndTimestampAndHour(String id, LocalDate timestamp, int hour);
 }

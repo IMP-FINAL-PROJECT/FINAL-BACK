@@ -7,4 +7,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface MoodRepository extends JpaRepository<Mood, MoodPK> {
+
+    Mood findTopByIdOrderByTimestampDesc(String id);
 }
