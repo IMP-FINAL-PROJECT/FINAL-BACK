@@ -80,4 +80,16 @@ public class UserController {
         return response;
     }
 
+    @GetMapping("/home")
+    public ResponseEntity<Message> home(HttpServletRequest request, @RequestParam String id) {
+        log.debug("Accessed IP : {}", request.getRemoteAddr());
+        log.debug("id : {}", id);
+
+        ResponseEntity<Message> response = userService.home(id);
+
+        log.debug("Data : {}", response.getBody());
+
+        return response;
+    }
+
 }
