@@ -17,14 +17,16 @@ public class UserDto {
     private Date birth;
     private String name;
     private Character gender;
-    private int point;
+    private String address;
 
     public User toEntity() {
         return User.builder()
                 .id(id)
+                .password(password)
                 .birth(birth)
                 .name(name)
                 .gender(gender)
+                .address(address)
                 .build();
     }
 

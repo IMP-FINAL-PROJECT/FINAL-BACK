@@ -35,7 +35,7 @@ public class UserController {
     @PostMapping("/register")
     public ResponseEntity<Message> register(HttpServletRequest request, @RequestBody UserDto userDto) {
         log.debug("Accessed IP : {}", request.getRemoteAddr());
-        log.debug("id : {}, birth : {}, name : {}, gender : {}", userDto.getId(), userDto.getBirth(), userDto.getName(), userDto.getGender());
+        log.debug("id : {}, birth : {}, name : {}, gender : {}, address : {}", userDto.getId(), userDto.getBirth(), userDto.getName(), userDto.getGender(), userDto.getAddress());
 
         ResponseEntity<Message> response = userService.register(userDto);
 
