@@ -25,9 +25,23 @@ public class AnalysisController {
     public ResponseEntity<Message> analysisOne(HttpServletRequest request, @RequestParam String id) {
 
         log.debug("Accessed IP : {}", request.getRemoteAddr());
-        log.debug("id : {}", id);
+        log.debug("id : {}, Method : analysisOne", id);
 
         ResponseEntity<Message> response = analysisService.analysisOne(id);
+
+        log.debug("Data : {}", response.getBody());
+
+        return response;
+
+    }
+
+    @GetMapping("/week")
+    public ResponseEntity<Message> analysisWeek(HttpServletRequest request, @RequestParam String id) {
+
+        log.debug("Accessed IP : {}", request.getRemoteAddr());
+        log.debug("id : {}, Method : analysisWeek", id);
+
+        ResponseEntity<Message> response = analysisService.analysisWeek(id);
 
         log.debug("Data : {}", response.getBody());
 

@@ -12,4 +12,6 @@ public interface AnalysisRepository extends JpaRepository<Analysis, Integer> {
 
     List<Analysis> findByIdAndTimestamp(String id, LocalDate timestamp);
 
+    List<Analysis> findByIdAndTimestampBetween(String id, LocalDate start, LocalDate end);
+
 }
