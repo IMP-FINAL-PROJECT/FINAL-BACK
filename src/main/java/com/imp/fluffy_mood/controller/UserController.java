@@ -59,7 +59,7 @@ public class UserController {
     @PutMapping("/change/{id}")
     public ResponseEntity<Message> changeInfo(HttpServletRequest request, @PathVariable String id, @RequestBody UserDto userDto) {
         log.debug("Accessed IP : {}", request.getRemoteAddr());
-        log.debug("id : {}, name : {}, birth : {}, gender : {}", id, userDto.getName(), userDto.getBirth(), userDto.getGender());
+        log.debug("id : {}, name : {}, birth : {}, gender : {}, address : {}", id, userDto.getName(), userDto.getBirth(), userDto.getGender(), userDto.getAddress());
 
         ResponseEntity<Message> response = userService.changeInfo(id, userDto);
 

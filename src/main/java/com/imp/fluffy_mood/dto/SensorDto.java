@@ -22,6 +22,10 @@ public class SensorDto {
     private int screenFrequency; // 화면 빈도 수
     @JsonProperty("screen_duration")
     private int screenDuration; // 화면 사용 시간
+    @JsonProperty("phone_frequency")
+    private int phoneFrequency; // 전화 빈도 수
+    @JsonProperty("phone_duration")
+    private int phoneDuration; // 전화 사용 시간
     private List<List<? extends Number>> gps; // gps
     private LocalDate timestamp; // 날짜
     private int hour; // 시간
@@ -34,6 +38,8 @@ public class SensorDto {
                 .pedometer(pedometer)
                 .screenFrequency(screenFrequency)
                 .screenDuration(screenDuration)
+                .phoneFrequency(phoneFrequency)
+                .phoneDuration(phoneDuration)
                 .gps(gps)
                 .timestamp(timestamp)
                 .hour(hour)
