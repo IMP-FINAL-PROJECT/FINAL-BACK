@@ -43,6 +43,12 @@ public class Sensor implements Serializable {
     @Column(name = "screen_duration")
     private int screenDuration; // 화면 사용 시간
 
+    @Column(name = "phone_frequency")
+    private int phoneFrequency; // 전화 빈도 수
+
+    @Column(name = "phone_duration")
+    private int phoneDuration; // 전화 사용 시간
+
     @Column(name = "gps", length = 5000)
     @Convert(converter = ListStringConverter.class)
     private List<List<? extends Number>> gps; // gps
@@ -61,6 +67,8 @@ public class Sensor implements Serializable {
                 .pedometer(pedometer)
                 .screenFrequency(screenFrequency)
                 .screenDuration(screenDuration)
+                .phoneFrequency(phoneFrequency)
+                .phoneDuration(phoneDuration)
                 .gps(gps)
                 .timestamp(timestamp)
                 .hour(hour)
