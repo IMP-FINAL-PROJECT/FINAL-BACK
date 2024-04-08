@@ -1,7 +1,6 @@
 package com.imp.fluffy_mood.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.imp.fluffy_mood.dto.AnalysisDto;
 import com.imp.fluffy_mood.entity.converter.IntegerStringConverter;
 import com.imp.fluffy_mood.entity.converter.ListStringConverter;
@@ -39,21 +38,15 @@ public class Analysis {
     @Column(name = "screen_duration")
     private int screenDuration; // 화면 사용 시간
 
+    @Column(name = "phone_frequency")
+    private int phoneFrequency;
+
+    @Column(name = "phone_duration")
+    private int phoneDuration;
+
     @Convert(converter = ListStringConverter.class)
     private List<List<? extends Number>> gps; // gps
 
     private LocalDate timestamp; // 날짜
-
-    public AnalysisDto toDto() {
-        return AnalysisDto.builder()
-                .id(id)
-                .illuminance(illuminance)
-                .pedometer(pedometer)
-                .screenDuration(screenDuration)
-                .screenFrequency(screenFrequency)
-                .gps(gps)
-                .timestamp(timestamp)
-                .build();
-    }
 
 }
