@@ -49,7 +49,7 @@ public class Sensor implements Serializable {
     @Column(name = "phone_duration")
     private int phoneDuration; // 전화 사용 시간
 
-    @Column(name = "gps", length = 5000)
+    @Column(name = "gps", length = 10000)
     @Convert(converter = ListStringConverter.class)
     private List<List<? extends Number>> gps; // gps
 

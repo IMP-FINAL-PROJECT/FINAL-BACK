@@ -4,6 +4,7 @@ import com.imp.fluffy_mood.entity.User;
 import lombok.*;
 
 import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
@@ -17,7 +18,7 @@ public class UserDto {
     private Date birth;
     private String name;
     private Character gender;
-    private String address;
+    private List<? extends Number> address;
 
     public User toEntity() {
         return User.builder()

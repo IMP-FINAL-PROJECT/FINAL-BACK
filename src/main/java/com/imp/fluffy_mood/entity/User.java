@@ -3,15 +3,14 @@ package com.imp.fluffy_mood.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import com.imp.fluffy_mood.dto.UserDto;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.imp.fluffy_mood.entity.converter.ListOneStringConverter;
+import jakarta.persistence.*;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
 import java.util.Date;
+import java.util.List;
 
 @Table(name = "user")
 @Entity
@@ -40,7 +39,8 @@ public class User {
     private Character gender;
 
     @Column(name = "address", nullable = false)
-    private String address;
+    @Convert(converter = ListOneStringConverter.class)
+    private List<? extends Number> address;
 
     // 회원 정보 변경을 위한 update Method
     public void update(UserDto userDto) {
