@@ -42,8 +42,8 @@ public class SensorService {
             sensor.setPedometer(sensor.getPedometer() + sensorDto.getPedometer());
             sensor.setScreenFrequency(sensor.getScreenFrequency() + sensorDto.getScreenFrequency());
             sensor.setScreenDuration(sensor.getScreenDuration() + sensorDto.getScreenDuration());
-            sensor.setPhoneFrequency(sensor.getPhoneFrequency() + sensorDto.getPhoneFrequency());
-            sensor.setPhoneDuration(sensor.getPhoneDuration() + sensorDto.getPhoneDuration());
+            sensor.setCallFrequency(sensor.getCallFrequency() + sensorDto.getCallFrequency());
+            sensor.setCallDuration(sensor.getCallDuration() + sensorDto.getCallDuration());
 
             illuminance.addAll(sensorDto.getIlluminance());
             sensor.setIlluminance(illuminance);

@@ -41,8 +41,8 @@ public class AnalysisService {
             List<Integer> dayScreenDurationList = new ArrayList<>();
             List<Integer> dayScreenFrequencyList = new ArrayList<>();
             List<Integer> dayPedometerList = new ArrayList<>();
-            List<Integer> dayPhoneFrequencyList = new ArrayList<>();
-            List<Integer> dayPhoneDurationList = new ArrayList<>();
+            List<Integer> dayCallFrequencyList = new ArrayList<>();
+            List<Integer> dayCallDurationList = new ArrayList<>();
 
             List<List<? extends Number>> gps = new ArrayList<>();
 
@@ -50,28 +50,25 @@ public class AnalysisService {
             List<Integer> weekScreenDurationList = new ArrayList<>();
             List<Integer> weekScreenFrequencyList = new ArrayList<>();
             List<Integer> weekPedometerList = new ArrayList<>();
-            List<Integer> weekPhoneFrequencyList = new ArrayList<>();
-            List<Integer> weekPhoneDurationList = new ArrayList<>();
+            List<Integer> weekCallFrequencyList = new ArrayList<>();
+            List<Integer> weekCallDurationList = new ArrayList<>();
 
             LocalDate lastSunday = LocalDate.now().with(DayOfWeek.SUNDAY).minusWeeks(1);
             LocalDate lastSaturday = lastSunday.plusDays(6);
-
-            System.out.println(lastSunday);
-            System.out.println(lastSaturday);
 
             int dayIlluminanceSum = 0; // 일 조도 합
             int dayScreenDruationSum = 0; // 일 스크린 타임 합
             int dayScreenFrequencySum = 0; // 일 화면 깨우기 합
             int dayPedometerSum = 0; // 일 만보기 합
-            int dayPhoneFrequencySum = 0; // 일 전화 빈도 합
-            int dayPhoneDurationSum = 0; // 일 전화 시간 합
+            int dayCallFrequencySum = 0; // 일 전화 빈도 합
+            int dayCallDurationSum = 0; // 일 전화 시간 합
             int weekIlluminanceSum = 0; // 주 조도 합
             int weekIlluminanceDay = 0; // 주 조도 하루 평균 저장
             int weekScreenDruationSum = 0; // 주 스크린 타임 합
             int weekScreenFrequencySum = 0; // 주 화면 깨우기 합
             int weekPedometerSum = 0; // 주 만보기 합
-            int weekPhoneFrequencySum = 0; // 주 전화 빈도 합
-            int weekPhoneDurationSum = 0; // 주 전화 시간 합
+            int weekCallFrequencySum = 0; // 주 전화 빈도 합
+            int weekCallDurationSum = 0; // 주 전화 시간 합
 
             analysisDto.setId(user.getId());
 
@@ -93,13 +90,13 @@ public class AnalysisService {
                 dayScreenDruationSum += analysisDay.get(i).getScreenDuration();
                 dayScreenFrequencySum += analysisDay.get(i).getScreenFrequency();
                 dayPedometerSum += analysisDay.get(i).getPedometer();
-                dayPhoneFrequencySum += analysisDay.get(i).getPhoneFrequency();
-                dayPhoneDurationSum += analysisDay.get(i).getPhoneDuration();
+                dayCallFrequencySum += analysisDay.get(i).getCallFrequency();
+                dayCallDurationSum += analysisDay.get(i).getCallDuration();
                 dayScreenDurationList.add(analysisDay.get(i).getScreenDuration());
                 dayScreenFrequencyList.add(analysisDay.get(i).getScreenFrequency());
                 dayPedometerList.add(analysisDay.get(i).getPedometer());
-                dayPhoneFrequencyList.add(analysisDay.get(i).getPhoneFrequency());
-                dayPhoneDurationList.add(analysisDay.get(i).getPhoneDuration());
+                dayCallFrequencyList.add(analysisDay.get(i).getCallFrequency());
+                dayCallDurationList.add(analysisDay.get(i).getCallDuration());
 
                 // gps 좌표 값
                 gps.addAll(analysisDay.get(i).getGps());
@@ -113,10 +110,10 @@ public class AnalysisService {
             dayAnalysisDto.setScreenDurationList(dayScreenDurationList);
             dayAnalysisDto.setScreenFrequency(dayScreenFrequencySum);
             dayAnalysisDto.setScreenFrequencyList(dayScreenFrequencyList);
-            dayAnalysisDto.setPhoneFrequency(dayPhoneFrequencySum);
-            dayAnalysisDto.setPhoneFrequencyList(dayPhoneFrequencyList);
-            dayAnalysisDto.setPhoneDuration(dayPhoneDurationSum);
-            dayAnalysisDto.setPhoneDurationList(dayPhoneDurationList);
+            dayAnalysisDto.setCallFrequency(dayCallFrequencySum);
+            dayAnalysisDto.setCallFrequencyList(dayCallFrequencyList);
+            dayAnalysisDto.setCallDuration(dayCallDurationSum);
+            dayAnalysisDto.setCallDurationList(dayCallDurationList);
 
             analysisDto.setGps(gps);
 
@@ -141,16 +138,16 @@ public class AnalysisService {
                     weekScreenDruationSum += analysisWeek.get(i).getScreenDuration();
                     weekScreenFrequencySum += analysisWeek.get(i).getScreenFrequency();
                     weekPedometerSum += analysisWeek.get(i).getPedometer();
-                    weekPhoneFrequencySum += analysisWeek.get(i).getPhoneFrequency();
-                    weekPhoneDurationSum += analysisWeek.get(i).getPhoneDuration();
+                    weekCallFrequencySum += analysisWeek.get(i).getCallFrequency();
+                    weekCallDurationSum += analysisWeek.get(i).getCallDuration();
 
                     if(i == analysisWeek.size() - 1) {
                         weekIlluminanceList.add(weekIlluminanceSum);
                         weekPedometerList.add(weekPedometerSum);
                         weekScreenDurationList.add(weekScreenDruationSum);
                         weekScreenFrequencyList.add(weekScreenFrequencySum);
-                        weekPhoneFrequencyList.add(weekPhoneFrequencySum);
-                        weekPhoneDurationList.add(weekPhoneDurationSum);
+                        weekCallFrequencyList.add(weekCallFrequencySum);
+                        weekCallDurationList.add(weekCallDurationSum);
                     }
 
                 } else {
@@ -158,15 +155,15 @@ public class AnalysisService {
                     weekPedometerList.add(weekPedometerSum);
                     weekScreenDurationList.add(weekScreenDruationSum);
                     weekScreenFrequencyList.add(weekScreenFrequencySum);
-                    weekPhoneFrequencyList.add(weekPhoneFrequencySum);
-                    weekPhoneDurationList.add(weekPhoneDurationSum);
+                    weekCallFrequencyList.add(weekCallFrequencySum);
+                    weekCallDurationList.add(weekCallDurationSum);
                     weekIlluminanceSum = 0;
                     weekIlluminanceDay = 0;
                     weekPedometerSum = 0;
                     weekScreenDruationSum = 0;
                     weekScreenFrequencySum = 0;
-                    weekPhoneFrequencySum = 0;
-                    weekPhoneDurationSum = 0;
+                    weekCallFrequencySum = 0;
+                    weekCallDurationSum = 0;
 
                     lastSunday = lastSunday.plusDays(1);
 
@@ -179,8 +176,8 @@ public class AnalysisService {
             weekAnalysisDto.setPedometerList(weekPedometerList);
             weekAnalysisDto.setScreenDurationList(weekScreenDurationList);
             weekAnalysisDto.setScreenFrequencyList(weekScreenFrequencyList);
-            weekAnalysisDto.setPhoneFrequencyList(weekPhoneFrequencyList);
-            weekAnalysisDto.setPhoneDurationList(weekPhoneDurationList);
+            weekAnalysisDto.setCallFrequencyList(weekCallFrequencyList);
+            weekAnalysisDto.setCallDurationList(weekCallDurationList);
 
             analysisDto.setDay(dayAnalysisDto);
             analysisDto.setWeek(weekAnalysisDto);

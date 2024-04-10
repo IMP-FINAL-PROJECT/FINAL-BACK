@@ -23,14 +23,14 @@ public class SensorController {
     @PostMapping("/insert")
     public ResponseEntity<Message> insert(HttpServletRequest request, @RequestBody SensorDto sensorDto) {
         log.debug("Accessed IP : {}", request.getRemoteAddr());
-        log.debug("id : {}, illuminance : {}, pedometer : {}, screen_frequency : {}, screen_duration : {}, phone_frequency : {}, phone_duration : {}, gps : {}, timestamp : {}, hour : {}",
+        log.debug("id : {}, illuminance : {}, pedometer : {}, screen_frequency : {}, screen_duration : {}, call_frequency : {}, call_duration : {}, gps : {}, timestamp : {}, hour : {}",
                 sensorDto.getId(),
                 sensorDto.getIlluminance(),
                 sensorDto.getPedometer(),
                 sensorDto.getScreenFrequency(),
                 sensorDto.getScreenDuration(),
-                sensorDto.getPhoneFrequency(),
-                sensorDto.getPhoneDuration(),
+                sensorDto.getCallFrequency(),
+                sensorDto.getCallDuration(),
                 sensorDto.getGps(),
                 sensorDto.getTimestamp(),
                 sensorDto.getHour());

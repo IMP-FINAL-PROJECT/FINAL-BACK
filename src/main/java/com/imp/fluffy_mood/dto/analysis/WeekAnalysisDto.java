@@ -22,9 +22,9 @@ public class WeekAnalysisDto {
     @JsonProperty("screen_duration_list")
     private List<Integer> screenDurationList; // 주 화면 사용 시간 시간대 별 list
 
-    @JsonProperty("phone_frequency_list")
-    private List<Integer> phoneFrequencyList; // 주 전화 사용 빈도 list
+    @JsonProperty("call_frequency_list")
+    private List<Integer> callFrequencyList; // 주 전화 사용 빈도 list
 
-    @JsonProperty("phone_duration_list")
-    private List<Integer> phoneDurationList; // 주 전화 사용 시간 list
+    @JsonProperty("call_duration_list")
+    private List<Integer> callDurationList; // 주 전화 사용 시간 list
 }
