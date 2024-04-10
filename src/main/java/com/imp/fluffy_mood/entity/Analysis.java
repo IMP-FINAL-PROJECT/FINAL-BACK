@@ -38,11 +38,11 @@ public class Analysis {
     @Column(name = "screen_duration")
     private int screenDuration; // 화면 사용 시간
 
-    @Column(name = "phone_frequency")
-    private int phoneFrequency;
+    @Column(name = "call_frequency")
+    private int callFrequency;
 
-    @Column(name = "phone_duration")
-    private int phoneDuration;
+    @Column(name = "call_duration")
+    private int callDuration;
 
     @Column(columnDefinition = "TEXT")
     @Convert(converter = ListStringConverter.class)

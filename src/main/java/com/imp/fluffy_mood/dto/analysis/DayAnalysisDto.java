@@ -31,16 +31,16 @@ public class DayAnalysisDto {
     @JsonProperty("screen_duration_list")
     private List<Integer> screenDurationList; // 일 화면 사용 시간 시간대 별 list
 
-    @JsonProperty("phone_frequency")
-    private int phoneFrequency; // 일 전화 횟수
+    @JsonProperty("call_frequency")
+    private int callFrequency; // 일 전화 횟수
 
-    @JsonProperty("phone_frequency_list")
-    private List<Integer> phoneFrequencyList; // 일 화면 사용 시간 시간대 별 list
+    @JsonProperty("call_frequency_list")
+    private List<Integer> callFrequencyList; // 일 화면 사용 시간 시간대 별 list
 
-    @JsonProperty("phone_duration")
-    private int phoneDuration; // 일 전화 시간
+    @JsonProperty("call_duration")
+    private int callDuration; // 일 전화 시간
 
-    @JsonProperty("phone_duration_list")
-    private List<Integer> phoneDurationList; // 일 화면 사용 시간 시간대 별 list
+    @JsonProperty("call_duration_list")
+    private List<Integer> callDurationList; // 일 화면 사용 시간 시간대 별 list
 
 }
