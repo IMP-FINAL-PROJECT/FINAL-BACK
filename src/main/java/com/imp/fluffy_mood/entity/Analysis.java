@@ -44,6 +44,7 @@ public class Analysis {
     @Column(name = "phone_duration")
     private int phoneDuration;
 
+    @Column(columnDefinition = "TEXT")
     @Convert(converter = ListStringConverter.class)
     private List<List<? extends Number>> gps; // gps
 

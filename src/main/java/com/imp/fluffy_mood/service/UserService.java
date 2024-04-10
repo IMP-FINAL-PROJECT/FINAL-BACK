@@ -7,8 +7,6 @@ import com.imp.fluffy_mood.enums.StatusEnum;
 import com.imp.fluffy_mood.repository.HappinessRepository;
 import com.imp.fluffy_mood.repository.JpaUserRepository;
 
-import com.imp.fluffy_mood.repository.MoodRepository;
-import com.imp.fluffy_mood.repository.SensorRepository;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.ResponseEntity;
@@ -32,7 +30,6 @@ public class UserService {
 
         // 로그인 성공
         if (user != null && passwordEncoder.matches(userDto.getPassword(), user.getPassword())) {
-
 
             message.setStatus(StatusEnum.OK.getStatusCode());
             message.setResult(true);
@@ -170,7 +167,7 @@ public class UserService {
 
         User user = jpaUserRepository.findById(id).orElse(null);
 
-        if(user != null) {
+        if (user != null) {
 
             Happiness happiness = happinessRepository.findTopByIdOrderByTimestampDesc(id);
 
@@ -178,14 +175,14 @@ public class UserService {
 
             homeDto.setId(id);
 
-            if(happiness != null) {
+            if (happiness != null) {
                 homeDto.setPoint(happiness.getPoint());
             }
 
-                message.setStatus(StatusEnum.OK.getStatusCode());
-                message.setResult(true);
-                message.setMessage("Success");
-                message.setData(homeDto);
+            message.setStatus(StatusEnum.OK.getStatusCode());
+            message.setResult(true);
+            message.setMessage("Success");
+            message.setData(homeDto);
 
         } else {
 
