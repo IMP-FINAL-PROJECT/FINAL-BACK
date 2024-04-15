@@ -13,6 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+
 @Service
 @RequiredArgsConstructor
 public class UserService {
@@ -30,6 +32,10 @@ public class UserService {
 
         // 로그인 성공
         if (user != null && passwordEncoder.matches(userDto.getPassword(), user.getPassword())) {
+
+            user.updateLastLogin();
+
+            jpaUserRepository.save(user);
 
             message.setStatus(StatusEnum.OK.getStatusCode());
             message.setResult(true);

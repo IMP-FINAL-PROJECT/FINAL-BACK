@@ -9,6 +9,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -42,6 +43,9 @@ public class User {
     @Convert(converter = ListOneStringConverter.class)
     private List<? extends Number> address;
 
+    @Column(name = "last_login", nullable = false)
+    private LocalDateTime lastLogin;
+
     // 회원 정보 변경을 위한 update Method
     public void update(UserDto userDto) {
 
@@ -60,6 +64,11 @@ public class User {
 
     }
 
+    // 사용자 로그인 시간 변경
+    public void updateLastLogin() {
+        this.lastLogin = LocalDateTime.now().withNano(0);
+    }
+
     public UserDto toDto() {
         return UserDto.builder()
                 .id(id)
@@ -68,6 +77,7 @@ public class User {
                 .name(name)
                 .gender(gender)
                 .address(address)
+                .lastLogin(lastLogin)
                 .build();
     }
 

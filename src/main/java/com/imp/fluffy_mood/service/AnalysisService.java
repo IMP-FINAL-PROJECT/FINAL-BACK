@@ -57,18 +57,23 @@ public class AnalysisService {
             LocalDate lastSaturday = lastSunday.plusDays(6);
 
             int dayIlluminanceSum = 0; // 일 조도 합
-            int dayScreenDruationSum = 0; // 일 스크린 타임 합
+            int dayScreenDurationSum = 0; // 일 스크린 타임 합
             int dayScreenFrequencySum = 0; // 일 화면 깨우기 합
             int dayPedometerSum = 0; // 일 만보기 합
             int dayCallFrequencySum = 0; // 일 전화 빈도 합
             int dayCallDurationSum = 0; // 일 전화 시간 합
             int weekIlluminanceSum = 0; // 주 조도 합
             int weekIlluminanceDay = 0; // 주 조도 하루 평균 저장
-            int weekScreenDruationSum = 0; // 주 스크린 타임 합
+            int weekScreenDurationSum = 0; // 주 스크린 타임 합
             int weekScreenFrequencySum = 0; // 주 화면 깨우기 합
             int weekPedometerSum = 0; // 주 만보기 합
             int weekCallFrequencySum = 0; // 주 전화 빈도 합
             int weekCallDurationSum = 0; // 주 전화 시간 합
+            int weekScreenDurationAll = 0; // 주 스크린 타임 총 합
+            int weekScreenFrequencyAll = 0; // 주 화면 깨우기 총 합
+            int weekPedometerAll = 0; // 주 만보기 총 합
+            int weekCallFrequencyAll = 0; // 주 전화 빈도 총 합
+            int weekCallDurationAll = 0; // 주 전화 시간 총 합
 
             analysisDto.setId(user.getId());
 
@@ -87,7 +92,7 @@ public class AnalysisService {
                 }
 
                 // 스크린 타임 List & 총 사용 시간 & 만보기 & 전화 시간 및 빈도
-                dayScreenDruationSum += analysisDay.get(i).getScreenDuration();
+                dayScreenDurationSum += analysisDay.get(i).getScreenDuration();
                 dayScreenFrequencySum += analysisDay.get(i).getScreenFrequency();
                 dayPedometerSum += analysisDay.get(i).getPedometer();
                 dayCallFrequencySum += analysisDay.get(i).getCallFrequency();
@@ -106,7 +111,7 @@ public class AnalysisService {
             dayAnalysisDto.setIlluminance(dayIlluminanceList);
             dayAnalysisDto.setPedometer(dayPedometerSum);
             dayAnalysisDto.setPedometerList(dayPedometerList);
-            dayAnalysisDto.setScreenDuration(dayScreenDruationSum);
+            dayAnalysisDto.setScreenDuration(dayScreenDurationSum);
             dayAnalysisDto.setScreenDurationList(dayScreenDurationList);
             dayAnalysisDto.setScreenFrequency(dayScreenFrequencySum);
             dayAnalysisDto.setScreenFrequencyList(dayScreenFrequencyList);
@@ -135,7 +140,7 @@ public class AnalysisService {
                     }
 
                     // 만보기, 스크린 타임, 사용 시간 하루씩 계산
-                    weekScreenDruationSum += analysisWeek.get(i).getScreenDuration();
+                    weekScreenDurationSum += analysisWeek.get(i).getScreenDuration();
                     weekScreenFrequencySum += analysisWeek.get(i).getScreenFrequency();
                     weekPedometerSum += analysisWeek.get(i).getPedometer();
                     weekCallFrequencySum += analysisWeek.get(i).getCallFrequency();
@@ -144,23 +149,33 @@ public class AnalysisService {
                     if(i == analysisWeek.size() - 1) {
                         weekIlluminanceList.add(weekIlluminanceSum);
                         weekPedometerList.add(weekPedometerSum);
-                        weekScreenDurationList.add(weekScreenDruationSum);
+                        weekScreenDurationList.add(weekScreenDurationSum);
                         weekScreenFrequencyList.add(weekScreenFrequencySum);
                         weekCallFrequencyList.add(weekCallFrequencySum);
                         weekCallDurationList.add(weekCallDurationSum);
+                        weekScreenDurationAll += weekScreenDurationSum;
+                        weekScreenFrequencyAll += weekScreenFrequencySum;
+                        weekPedometerAll += weekPedometerSum;
+                        weekCallDurationAll += weekCallDurationSum;
+                        weekCallFrequencyAll += weekCallFrequencyAll;
                     }
 
                 } else {
                     weekIlluminanceList.add(weekIlluminanceSum);
                     weekPedometerList.add(weekPedometerSum);
-                    weekScreenDurationList.add(weekScreenDruationSum);
+                    weekScreenDurationList.add(weekScreenDurationSum);
                     weekScreenFrequencyList.add(weekScreenFrequencySum);
                     weekCallFrequencyList.add(weekCallFrequencySum);
                     weekCallDurationList.add(weekCallDurationSum);
+                    weekScreenDurationAll += weekScreenDurationSum;
+                    weekScreenFrequencyAll += weekScreenFrequencySum;
+                    weekPedometerAll += weekPedometerSum;
+                    weekCallDurationAll += weekCallDurationSum;
+                    weekCallFrequencyAll += weekCallFrequencySum;
                     weekIlluminanceSum = 0;
                     weekIlluminanceDay = 0;
                     weekPedometerSum = 0;
-                    weekScreenDruationSum = 0;
+                    weekScreenDurationSum = 0;
                     weekScreenFrequencySum = 0;
                     weekCallFrequencySum = 0;
                     weekCallDurationSum = 0;
@@ -178,6 +193,11 @@ public class AnalysisService {
             weekAnalysisDto.setScreenFrequencyList(weekScreenFrequencyList);
             weekAnalysisDto.setCallFrequencyList(weekCallFrequencyList);
             weekAnalysisDto.setCallDurationList(weekCallDurationList);
+            weekAnalysisDto.setPedometer(weekPedometerAll);
+            weekAnalysisDto.setScreenDuration(weekScreenDurationAll);
+            weekAnalysisDto.setScreenFrequency(weekScreenFrequencyAll);
+            weekAnalysisDto.setCallDuration(weekCallDurationAll);
+            weekAnalysisDto.setCallFrequency(weekCallFrequencyAll);
 
             analysisDto.setDay(dayAnalysisDto);
             analysisDto.setWeek(weekAnalysisDto);
