@@ -109,15 +109,15 @@ public class AnalysisService {
             }
 
             dayAnalysisDto.setIlluminance(dayIlluminanceList);
-            dayAnalysisDto.setPedometer(dayPedometerSum);
+            dayAnalysisDto.setPedometer(dayPedometerSum / analysisDay.size());
             dayAnalysisDto.setPedometerList(dayPedometerList);
-            dayAnalysisDto.setScreenDuration(dayScreenDurationSum);
+            dayAnalysisDto.setScreenDuration(dayScreenDurationSum / analysisDay.size());
             dayAnalysisDto.setScreenDurationList(dayScreenDurationList);
-            dayAnalysisDto.setScreenFrequency(dayScreenFrequencySum);
+            dayAnalysisDto.setScreenFrequency(dayScreenFrequencySum / analysisDay.size());
             dayAnalysisDto.setScreenFrequencyList(dayScreenFrequencyList);
-            dayAnalysisDto.setCallFrequency(dayCallFrequencySum);
+            dayAnalysisDto.setCallFrequency(dayCallFrequencySum / analysisDay.size());
             dayAnalysisDto.setCallFrequencyList(dayCallFrequencyList);
-            dayAnalysisDto.setCallDuration(dayCallDurationSum);
+            dayAnalysisDto.setCallDuration(dayCallDurationSum / analysisDay.size());
             dayAnalysisDto.setCallDurationList(dayCallDurationList);
 
             analysisDto.setGps(gps);
@@ -157,7 +157,7 @@ public class AnalysisService {
                         weekScreenFrequencyAll += weekScreenFrequencySum;
                         weekPedometerAll += weekPedometerSum;
                         weekCallDurationAll += weekCallDurationSum;
-                        weekCallFrequencyAll += weekCallFrequencyAll;
+                        weekCallFrequencyAll += weekCallFrequencySum;
                     }
 
                 } else {
@@ -193,11 +193,11 @@ public class AnalysisService {
             weekAnalysisDto.setScreenFrequencyList(weekScreenFrequencyList);
             weekAnalysisDto.setCallFrequencyList(weekCallFrequencyList);
             weekAnalysisDto.setCallDurationList(weekCallDurationList);
-            weekAnalysisDto.setPedometer(weekPedometerAll);
-            weekAnalysisDto.setScreenDuration(weekScreenDurationAll);
-            weekAnalysisDto.setScreenFrequency(weekScreenFrequencyAll);
-            weekAnalysisDto.setCallDuration(weekCallDurationAll);
-            weekAnalysisDto.setCallFrequency(weekCallFrequencyAll);
+            weekAnalysisDto.setPedometer(weekPedometerAll / weekPedometerList.size());
+            weekAnalysisDto.setScreenDuration(weekScreenDurationAll / weekScreenDurationList.size());
+            weekAnalysisDto.setScreenFrequency(weekScreenFrequencyAll / weekScreenFrequencyList.size());
+            weekAnalysisDto.setCallDuration(weekCallDurationAll / weekCallDurationList.size());
+            weekAnalysisDto.setCallFrequency(weekCallFrequencyAll / weekCallFrequencyList.size());
 
             analysisDto.setDay(dayAnalysisDto);
             analysisDto.setWeek(weekAnalysisDto);
