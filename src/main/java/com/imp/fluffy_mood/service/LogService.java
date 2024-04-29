@@ -34,7 +34,7 @@ public class LogService {
 
             LogDto logDto = new LogDto();
             DayLogDto dayLogDto = new DayLogDto();
-            WeekLogDto weekAnalysisDto = new WeekLogDto();
+            WeekLogDto weekLogDto = new WeekLogDto();
 
             List<Integer> dayIlluminanceList = new ArrayList<>();
             List<Integer> dayScreenDurationList = new ArrayList<>();
@@ -185,20 +185,20 @@ public class LogService {
 
             }
 
-            weekAnalysisDto.setIlluminance(weekIlluminanceList);
-            weekAnalysisDto.setPedometerList(weekPedometerList);
-            weekAnalysisDto.setScreenDurationList(weekScreenDurationList);
-            weekAnalysisDto.setScreenFrequencyList(weekScreenFrequencyList);
-            weekAnalysisDto.setCallFrequencyList(weekCallFrequencyList);
-            weekAnalysisDto.setCallDurationList(weekCallDurationList);
-            weekAnalysisDto.setPedometer((!weekPedometerList.isEmpty()) ? weekPedometerAll / weekPedometerList.size() : weekPedometerAll);
-            weekAnalysisDto.setScreenDuration((!weekScreenDurationList.isEmpty()) ? weekScreenDurationAll / weekScreenDurationList.size() : weekScreenDurationAll);
-            weekAnalysisDto.setScreenFrequency((!weekScreenFrequencyList.isEmpty()) ? weekScreenFrequencyAll / weekScreenFrequencyList.size() : weekScreenFrequencyAll);
-            weekAnalysisDto.setCallDuration((!weekCallDurationList.isEmpty()) ? weekCallDurationAll / weekCallDurationList.size() : weekCallDurationAll);
-            weekAnalysisDto.setCallFrequency((!weekCallFrequencyList.isEmpty()) ? weekCallFrequencyAll / weekCallFrequencyList.size() : weekCallFrequencyAll);
+            weekLogDto.setIlluminance(weekIlluminanceList);
+            weekLogDto.setPedometerList(weekPedometerList);
+            weekLogDto.setScreenDurationList(weekScreenDurationList);
+            weekLogDto.setScreenFrequencyList(weekScreenFrequencyList);
+            weekLogDto.setCallFrequencyList(weekCallFrequencyList);
+            weekLogDto.setCallDurationList(weekCallDurationList);
+            weekLogDto.setPedometer((!weekPedometerList.isEmpty()) ? weekPedometerAll / weekPedometerList.size() : weekPedometerAll);
+            weekLogDto.setScreenDuration((!weekScreenDurationList.isEmpty()) ? weekScreenDurationAll / weekScreenDurationList.size() : weekScreenDurationAll);
+            weekLogDto.setScreenFrequency((!weekScreenFrequencyList.isEmpty()) ? weekScreenFrequencyAll / weekScreenFrequencyList.size() : weekScreenFrequencyAll);
+            weekLogDto.setCallDuration((!weekCallDurationList.isEmpty()) ? weekCallDurationAll / weekCallDurationList.size() : weekCallDurationAll);
+            weekLogDto.setCallFrequency((!weekCallFrequencyList.isEmpty()) ? weekCallFrequencyAll / weekCallFrequencyList.size() : weekCallFrequencyAll);
 
             logDto.setDay(dayLogDto);
-            logDto.setWeek(weekAnalysisDto);
+            logDto.setWeek(weekLogDto);
 
             logDto.setTimestamp(date);
 
