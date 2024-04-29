@@ -1,8 +1,8 @@
 package com.imp.fluffy_mood.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.imp.fluffy_mood.dto.analysis.DayAnalysisDto;
-import com.imp.fluffy_mood.dto.analysis.WeekAnalysisDto;
+import com.imp.fluffy_mood.dto.analysis.DayLogDto;
+import com.imp.fluffy_mood.dto.analysis.WeekLogDto;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -13,17 +13,17 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class AnalysisDto {
+public class LogDto {
 
     private String id; // 사용자 아이디 (e-mail)
 
-    private DayAnalysisDto day; // 일 데이터
+    private DayLogDto day; // 일 데이터
 
-    private WeekAnalysisDto week; // 주 데이터
+    private WeekLogDto week; // 주 데이터
 
     private List<List<? extends Number>> gps; // gps
 
     @JsonProperty("date")
-    private LocalDate timestamp = LocalDate.now();
+    private LocalDate timestamp;
 
 }
