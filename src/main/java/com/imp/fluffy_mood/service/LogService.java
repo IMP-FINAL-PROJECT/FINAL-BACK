@@ -191,11 +191,11 @@ public class LogService {
             weekAnalysisDto.setScreenFrequencyList(weekScreenFrequencyList);
             weekAnalysisDto.setCallFrequencyList(weekCallFrequencyList);
             weekAnalysisDto.setCallDurationList(weekCallDurationList);
-            weekAnalysisDto.setPedometer(weekPedometerAll);
-            weekAnalysisDto.setScreenDuration(weekScreenDurationAll);
-            weekAnalysisDto.setScreenFrequency(weekScreenFrequencyAll);
-            weekAnalysisDto.setCallDuration(weekCallDurationAll);
-            weekAnalysisDto.setCallFrequency(weekCallFrequencyAll);
+            weekAnalysisDto.setPedometer((!weekPedometerList.isEmpty()) ? weekPedometerAll / weekPedometerList.size() : weekPedometerAll);
+            weekAnalysisDto.setScreenDuration((!weekScreenDurationList.isEmpty()) ? weekScreenDurationAll / weekScreenDurationList.size() : weekScreenDurationAll);
+            weekAnalysisDto.setScreenFrequency((!weekScreenFrequencyList.isEmpty()) ? weekScreenFrequencyAll / weekScreenFrequencyList.size() : weekScreenFrequencyAll);
+            weekAnalysisDto.setCallDuration((!weekCallDurationList.isEmpty()) ? weekCallDurationAll / weekCallDurationList.size() : weekCallDurationAll);
+            weekAnalysisDto.setCallFrequency((!weekCallFrequencyList.isEmpty()) ? weekCallFrequencyAll / weekCallFrequencyList.size() : weekCallFrequencyAll);
 
             logDto.setDay(dayLogDto);
             logDto.setWeek(weekAnalysisDto);
