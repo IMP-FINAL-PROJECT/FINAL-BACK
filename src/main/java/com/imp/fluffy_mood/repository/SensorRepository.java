@@ -1,6 +1,5 @@
 package com.imp.fluffy_mood.repository;
 
-import com.imp.fluffy_mood.dto.AnalysisDto;
 import com.imp.fluffy_mood.entity.Sensor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

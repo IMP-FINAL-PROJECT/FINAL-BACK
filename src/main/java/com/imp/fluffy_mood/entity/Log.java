@@ -1,7 +1,6 @@
 package com.imp.fluffy_mood.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.imp.fluffy_mood.dto.AnalysisDto;
 import com.imp.fluffy_mood.entity.converter.IntegerStringConverter;
 import com.imp.fluffy_mood.entity.converter.ListStringConverter;
 import jakarta.persistence.*;
@@ -19,7 +18,7 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Builder
-public class Analysis {
+public class Log {
 
     @Id
     @JsonIgnore

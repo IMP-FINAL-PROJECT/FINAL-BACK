@@ -1,31 +1,30 @@
 package com.imp.fluffy_mood.service;
 
-import com.imp.fluffy_mood.dto.AnalysisDto;
-import com.imp.fluffy_mood.dto.analysis.DayAnalysisDto;
-import com.imp.fluffy_mood.dto.analysis.WeekAnalysisDto;
-import com.imp.fluffy_mood.entity.Analysis;
+import com.imp.fluffy_mood.dto.LogDto;
+import com.imp.fluffy_mood.dto.analysis.DayLogDto;
+import com.imp.fluffy_mood.dto.analysis.WeekLogDto;
+import com.imp.fluffy_mood.entity.Log;
 import com.imp.fluffy_mood.entity.Message;
 import com.imp.fluffy_mood.entity.User;
 import com.imp.fluffy_mood.enums.StatusEnum;
-import com.imp.fluffy_mood.repository.AnalysisRepository;
+import com.imp.fluffy_mood.repository.LogRepository;
 import com.imp.fluffy_mood.repository.JpaUserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class AnalysisService {
+public class LogService {
 
     private final JpaUserRepository jpaUserRepository;
-    private final AnalysisRepository analysisRepository;
+    private final LogRepository logRepository;
 
-    public ResponseEntity<Message> analysis(String id) {
+    public ResponseEntity<Message> log(String id, LocalDate date) {
 
         Message message = new Message();
 
@@ -33,9 +32,9 @@ public class AnalysisService {
 
         if (user != null) {
 
-            AnalysisDto analysisDto = new AnalysisDto();
-            DayAnalysisDto dayAnalysisDto = new DayAnalysisDto();
-            WeekAnalysisDto weekAnalysisDto = new WeekAnalysisDto();
+            LogDto logDto = new LogDto();
+            DayLogDto dayLogDto = new DayLogDto();
+            WeekLogDto weekLogDto = new WeekLogDto();
 
             List<Integer> dayIlluminanceList = new ArrayList<>();
             List<Integer> dayScreenDurationList = new ArrayList<>();
@@ -53,8 +52,7 @@ public class AnalysisService {
             List<Integer> weekCallFrequencyList = new ArrayList<>();
             List<Integer> weekCallDurationList = new ArrayList<>();
 
-            LocalDate lastSunday = LocalDate.now().with(DayOfWeek.SUNDAY).minusWeeks(1);
-            LocalDate lastSaturday = lastSunday.plusDays(6);
+            LocalDate lastWeekStart = date.minusWeeks(1).plusDays(1);
 
             int dayIlluminanceSum = 0; // 일 조도 합
             int dayScreenDurationSum = 0; // 일 스크린 타임 합
@@ -75,78 +73,78 @@ public class AnalysisService {
             int weekCallFrequencyAll = 0; // 주 전화 빈도 총 합
             int weekCallDurationAll = 0; // 주 전화 시간 총 합
 
-            analysisDto.setId(user.getId());
+            logDto.setId(user.getId());
 
-            List<Analysis> analysisDay = analysisRepository.findByIdAndTimestamp(id, LocalDate.now());
+            List<Log> logDay = logRepository.findByIdAndTimestamp(id, date);
 
-            for (int i = 0; i < analysisDay.size(); i++) {
+            for (int i = 0; i < logDay.size(); i++) {
 
                 // 조도 평균
-                for (int j = 0; j < analysisDay.get(i).getIlluminance().size(); j++) {
-                    dayIlluminanceSum += analysisDay.get(i).getIlluminance().get(j);
+                for (int j = 0; j < logDay.get(i).getIlluminance().size(); j++) {
+                    dayIlluminanceSum += logDay.get(i).getIlluminance().get(j);
 
-                    if (j == analysisDay.get(i).getIlluminance().size() - 1) {
-                        dayIlluminanceSum /= analysisDay.get(i).getIlluminance().size();
+                    if (j == logDay.get(i).getIlluminance().size() - 1) {
+                        dayIlluminanceSum /= logDay.get(i).getIlluminance().size();
                         dayIlluminanceList.add(dayIlluminanceSum); // 저장
                     }
                 }
 
                 // 스크린 타임 List & 총 사용 시간 & 만보기 & 전화 시간 및 빈도
-                dayScreenDurationSum += analysisDay.get(i).getScreenDuration();
-                dayScreenFrequencySum += analysisDay.get(i).getScreenFrequency();
-                dayPedometerSum += analysisDay.get(i).getPedometer();
-                dayCallFrequencySum += analysisDay.get(i).getCallFrequency();
-                dayCallDurationSum += analysisDay.get(i).getCallDuration();
-                dayScreenDurationList.add(analysisDay.get(i).getScreenDuration());
-                dayScreenFrequencyList.add(analysisDay.get(i).getScreenFrequency());
-                dayPedometerList.add(analysisDay.get(i).getPedometer());
-                dayCallFrequencyList.add(analysisDay.get(i).getCallFrequency());
-                dayCallDurationList.add(analysisDay.get(i).getCallDuration());
+                dayScreenDurationSum += logDay.get(i).getScreenDuration();
+                dayScreenFrequencySum += logDay.get(i).getScreenFrequency();
+                dayPedometerSum += logDay.get(i).getPedometer();
+                dayCallFrequencySum += logDay.get(i).getCallFrequency();
+                dayCallDurationSum += logDay.get(i).getCallDuration();
+                dayScreenDurationList.add(logDay.get(i).getScreenDuration());
+                dayScreenFrequencyList.add(logDay.get(i).getScreenFrequency());
+                dayPedometerList.add(logDay.get(i).getPedometer());
+                dayCallFrequencyList.add(logDay.get(i).getCallFrequency());
+                dayCallDurationList.add(logDay.get(i).getCallDuration());
 
                 // gps 좌표 값
-                gps.addAll(analysisDay.get(i).getGps());
+                gps.addAll(logDay.get(i).getGps());
 
             }
 
-            dayAnalysisDto.setIlluminance(dayIlluminanceList);
-            dayAnalysisDto.setPedometer(dayPedometerSum / analysisDay.size());
-            dayAnalysisDto.setPedometerList(dayPedometerList);
-            dayAnalysisDto.setScreenDuration(dayScreenDurationSum / analysisDay.size());
-            dayAnalysisDto.setScreenDurationList(dayScreenDurationList);
-            dayAnalysisDto.setScreenFrequency(dayScreenFrequencySum / analysisDay.size());
-            dayAnalysisDto.setScreenFrequencyList(dayScreenFrequencyList);
-            dayAnalysisDto.setCallFrequency(dayCallFrequencySum / analysisDay.size());
-            dayAnalysisDto.setCallFrequencyList(dayCallFrequencyList);
-            dayAnalysisDto.setCallDuration(dayCallDurationSum / analysisDay.size());
-            dayAnalysisDto.setCallDurationList(dayCallDurationList);
+            dayLogDto.setIlluminance(dayIlluminanceList);
+            dayLogDto.setPedometer(dayPedometerSum);
+            dayLogDto.setPedometerList(dayPedometerList);
+            dayLogDto.setScreenDuration(dayScreenDurationSum);
+            dayLogDto.setScreenDurationList(dayScreenDurationList);
+            dayLogDto.setScreenFrequency(dayScreenFrequencySum);
+            dayLogDto.setScreenFrequencyList(dayScreenFrequencyList);
+            dayLogDto.setCallFrequency(dayCallFrequencySum);
+            dayLogDto.setCallFrequencyList(dayCallFrequencyList);
+            dayLogDto.setCallDuration(dayCallDurationSum);
+            dayLogDto.setCallDurationList(dayCallDurationList);
 
-            analysisDto.setGps(gps);
+            logDto.setGps(gps);
 
-            List<Analysis> analysisWeek = analysisRepository.findByIdAndTimestampBetween(id, lastSunday, lastSaturday);
+            List<Log> logWeek = logRepository.findByIdAndTimestampBetween(id, lastWeekStart, date);
 
-            for(int i = 0; i < analysisWeek.size(); i++) {
+            for(int i = 0; i < logWeek.size(); i++) {
 
-                if (analysisWeek.get(i).getTimestamp().equals(lastSunday)) {
+                if (logWeek.get(i).getTimestamp().equals(lastWeekStart)) {
                     // 조도 하루씩 계산
-                    for (int j = 0; j < analysisWeek.get(i).getIlluminance().size(); j++) {
+                    for (int j = 0; j < logWeek.get(i).getIlluminance().size(); j++) {
 
-                        weekIlluminanceSum += analysisWeek.get(i).getIlluminance().get(j);
+                        weekIlluminanceSum += logWeek.get(i).getIlluminance().get(j);
 
-                        if (j == analysisWeek.get(i).getIlluminance().size() - 1) {
-                            weekIlluminanceSum /= analysisWeek.get(i).getIlluminance().size();
+                        if (j == logWeek.get(i).getIlluminance().size() - 1) {
+                            weekIlluminanceSum /= logWeek.get(i).getIlluminance().size();
                             weekIlluminanceDay += weekIlluminanceSum;
                         }
 
                     }
 
                     // 만보기, 스크린 타임, 사용 시간 하루씩 계산
-                    weekScreenDurationSum += analysisWeek.get(i).getScreenDuration();
-                    weekScreenFrequencySum += analysisWeek.get(i).getScreenFrequency();
-                    weekPedometerSum += analysisWeek.get(i).getPedometer();
-                    weekCallFrequencySum += analysisWeek.get(i).getCallFrequency();
-                    weekCallDurationSum += analysisWeek.get(i).getCallDuration();
+                    weekScreenDurationSum += logWeek.get(i).getScreenDuration();
+                    weekScreenFrequencySum += logWeek.get(i).getScreenFrequency();
+                    weekPedometerSum += logWeek.get(i).getPedometer();
+                    weekCallFrequencySum += logWeek.get(i).getCallFrequency();
+                    weekCallDurationSum += logWeek.get(i).getCallDuration();
 
-                    if(i == analysisWeek.size() - 1) {
+                    if(i == logWeek.size() - 1) {
                         weekIlluminanceList.add(weekIlluminanceSum);
                         weekPedometerList.add(weekPedometerSum);
                         weekScreenDurationList.add(weekScreenDurationSum);
@@ -180,32 +178,34 @@ public class AnalysisService {
                     weekCallFrequencySum = 0;
                     weekCallDurationSum = 0;
 
-                    lastSunday = lastSunday.plusDays(1);
+                    lastWeekStart = lastWeekStart.plusDays(1);
 
                     i -= 1;
                 }
 
             }
 
-            weekAnalysisDto.setIlluminance(weekIlluminanceList);
-            weekAnalysisDto.setPedometerList(weekPedometerList);
-            weekAnalysisDto.setScreenDurationList(weekScreenDurationList);
-            weekAnalysisDto.setScreenFrequencyList(weekScreenFrequencyList);
-            weekAnalysisDto.setCallFrequencyList(weekCallFrequencyList);
-            weekAnalysisDto.setCallDurationList(weekCallDurationList);
-            weekAnalysisDto.setPedometer(weekPedometerAll / weekPedometerList.size());
-            weekAnalysisDto.setScreenDuration(weekScreenDurationAll / weekScreenDurationList.size());
-            weekAnalysisDto.setScreenFrequency(weekScreenFrequencyAll / weekScreenFrequencyList.size());
-            weekAnalysisDto.setCallDuration(weekCallDurationAll / weekCallDurationList.size());
-            weekAnalysisDto.setCallFrequency(weekCallFrequencyAll / weekCallFrequencyList.size());
+            weekLogDto.setIlluminance(weekIlluminanceList);
+            weekLogDto.setPedometerList(weekPedometerList);
+            weekLogDto.setScreenDurationList(weekScreenDurationList);
+            weekLogDto.setScreenFrequencyList(weekScreenFrequencyList);
+            weekLogDto.setCallFrequencyList(weekCallFrequencyList);
+            weekLogDto.setCallDurationList(weekCallDurationList);
+            weekLogDto.setPedometer((!weekPedometerList.isEmpty()) ? weekPedometerAll / weekPedometerList.size() : weekPedometerAll);
+            weekLogDto.setScreenDuration((!weekScreenDurationList.isEmpty()) ? weekScreenDurationAll / weekScreenDurationList.size() : weekScreenDurationAll);
+            weekLogDto.setScreenFrequency((!weekScreenFrequencyList.isEmpty()) ? weekScreenFrequencyAll / weekScreenFrequencyList.size() : weekScreenFrequencyAll);
+            weekLogDto.setCallDuration((!weekCallDurationList.isEmpty()) ? weekCallDurationAll / weekCallDurationList.size() : weekCallDurationAll);
+            weekLogDto.setCallFrequency((!weekCallFrequencyList.isEmpty()) ? weekCallFrequencyAll / weekCallFrequencyList.size() : weekCallFrequencyAll);
 
-            analysisDto.setDay(dayAnalysisDto);
-            analysisDto.setWeek(weekAnalysisDto);
+            logDto.setDay(dayLogDto);
+            logDto.setWeek(weekLogDto);
+
+            logDto.setTimestamp(date);
 
             message.setStatus(StatusEnum.OK.getStatusCode());
             message.setResult(true);
             message.setMessage("Success");
-            message.setData(analysisDto);
+            message.setData(logDto);
 
         } else {
             message.setStatus(StatusEnum.BAD_REQUEST.getStatusCode());
