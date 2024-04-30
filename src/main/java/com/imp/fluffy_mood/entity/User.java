@@ -46,6 +46,9 @@ public class User {
     @Column(name = "last_login", nullable = false)
     private LocalDateTime lastLogin;
 
+    @Column(name = "token")
+    private String token;
+
     // 회원 정보 변경을 위한 update Method
     public void update(UserDto userDto) {
 
