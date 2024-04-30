@@ -7,44 +7,29 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+
 @CrossOrigin(origins = "*")
 @Slf4j
 @RestController
-@RequestMapping("/api/analysis")
+@RequestMapping("api/analysis")
 public class AnalysisController {
 
     private final AnalysisService analysisService;
 
-    public AnalysisController(AnalysisService analysisService) {
-        this.analysisService = analysisService;
-    }
-
+    public AnalysisController(AnalysisService analysisService) { this.analysisService = analysisService; }
 
     @GetMapping("")
-    public ResponseEntity<Message> analysis(HttpServletRequest request, @RequestParam String id) {
+    public ResponseEntity<Message> analysis(HttpServletRequest request, @RequestParam String id, @RequestParam LocalDate date) {
 
         log.debug("Accessed IP : {}", request.getRemoteAddr());
-        log.debug("id : {}, Method : analysis", id);
+        log.debug("id : {}, date : {}, Method : analysis", id, date);
 
-        ResponseEntity<Message> response = analysisService.analysis(id);
+        ResponseEntity<Message> response = analysisService.analysis(id, date);
 
         log.debug("Data : {}", response.getBody());
 
         return response;
 
     }
-
-//    @GetMapping("/week")
-//    public ResponseEntity<Message> analysisWeek(HttpServletRequest request, @RequestParam String id) {
-//
-//        log.debug("Accessed IP : {}", request.getRemoteAddr());
-//        log.debug("id : {}, Method : analysisWeek", id);
-//
-//        ResponseEntity<Message> response = analysisService.analysisWeek(id);
-//
-//        log.debug("Data : {}", response.getBody());
-//
-//        return response;
-//
-//    }
 }

@@ -9,8 +9,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 @Table(name = "user")
@@ -30,8 +30,8 @@ public class User {
     @JsonIgnore
     private String password;
 
-    @Column(name = "birth", columnDefinition = "DATE", nullable = false)
-    private Date birth;
+    @Column(name = "birth", nullable = false)
+    private LocalDate birth;
 
     @Column(name = "name", nullable = false)
     private String name;
@@ -47,6 +47,7 @@ public class User {
     private LocalDateTime lastLogin;
 
     @Column(name = "token")
+    @JsonIgnore
     private String token;
 
     // 회원 정보 변경을 위한 update Method

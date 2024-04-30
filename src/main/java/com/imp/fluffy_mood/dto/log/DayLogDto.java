@@ -1,4 +1,4 @@
-package com.imp.fluffy_mood.dto.analysis;
+package com.imp.fluffy_mood.dto.log;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
@@ -8,7 +8,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-public class DayAnalysisDto {
+public class DayLogDto {
 
     @JsonProperty("illuminance")
     private List<Integer> illuminance; // 일 조도 평균
