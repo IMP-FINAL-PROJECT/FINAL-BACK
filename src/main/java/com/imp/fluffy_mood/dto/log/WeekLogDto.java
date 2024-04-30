@@ -1,4 +1,4 @@
-package com.imp.fluffy_mood.dto.analysis;
+package com.imp.fluffy_mood.dto.log;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
