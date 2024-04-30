@@ -1,8 +1,8 @@
 package com.imp.fluffy_mood.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.imp.fluffy_mood.dto.analysis.DayLogDto;
-import com.imp.fluffy_mood.dto.analysis.WeekLogDto;
+import com.imp.fluffy_mood.dto.log.DayLogDto;
+import com.imp.fluffy_mood.dto.log.WeekLogDto;
 import lombok.*;
 
 import java.time.LocalDate;

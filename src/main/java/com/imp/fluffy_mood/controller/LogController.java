@@ -23,7 +23,7 @@ public class LogController {
 
 
     @GetMapping("")
-    public ResponseEntity<Message> analysis(HttpServletRequest request, @RequestParam String id, @RequestParam LocalDate date) {
+    public ResponseEntity<Message> log(HttpServletRequest request, @RequestParam String id, @RequestParam LocalDate date) {
 
         log.debug("Accessed IP : {}", request.getRemoteAddr());
         log.debug("id : {}, Method : log", id);

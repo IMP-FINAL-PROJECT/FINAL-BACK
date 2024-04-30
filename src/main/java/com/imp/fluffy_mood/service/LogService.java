@@ -1,8 +1,8 @@
 package com.imp.fluffy_mood.service;
 
 import com.imp.fluffy_mood.dto.LogDto;
-import com.imp.fluffy_mood.dto.analysis.DayLogDto;
-import com.imp.fluffy_mood.dto.analysis.WeekLogDto;
+import com.imp.fluffy_mood.dto.log.DayLogDto;
+import com.imp.fluffy_mood.dto.log.WeekLogDto;
 import com.imp.fluffy_mood.entity.Log;
 import com.imp.fluffy_mood.entity.Message;
 import com.imp.fluffy_mood.entity.User;
