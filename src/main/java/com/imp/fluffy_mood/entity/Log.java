@@ -49,4 +49,6 @@ public class Log {
 
     private LocalDate timestamp; // 날짜
 
+    private int hour; //시간
+
 }
