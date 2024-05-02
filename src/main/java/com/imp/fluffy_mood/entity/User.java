@@ -47,7 +47,6 @@ public class User {
     private LocalDateTime lastLogin;
 
     @Column(name = "token")
-    @JsonIgnore
     private String token;
 
     // 회원 정보 변경을 위한 update Method
@@ -71,6 +70,10 @@ public class User {
     // 사용자 로그인 시간 변경
     public void updateLastLogin() {
         this.lastLogin = LocalDateTime.now().withNano(0);
+    }
+
+    public void updateToken(String token) {
+        this.token = token;
     }
 
     public UserDto toDto() {
