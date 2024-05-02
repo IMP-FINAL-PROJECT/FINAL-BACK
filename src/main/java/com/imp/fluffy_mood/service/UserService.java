@@ -35,6 +35,10 @@ public class UserService {
 
             user.updateLastLogin();
 
+            if(userDto.getToken() != null && user.getToken() != userDto.getToken()) {
+                user.updateToken(userDto.getToken());
+            }
+
             jpaUserRepository.save(user);
 
             message.setStatus(StatusEnum.OK.getStatusCode());

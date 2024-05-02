@@ -1,6 +1,5 @@
 package com.imp.fluffy_mood.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.imp.fluffy_mood.entity.User;
 import lombok.*;
@@ -24,7 +23,6 @@ public class UserDto {
     private List<? extends Number> address;
     @JsonProperty("last_login")
     private LocalDateTime lastLogin;
-    @JsonIgnore
     private String token;
 
     public User toEntity() {
