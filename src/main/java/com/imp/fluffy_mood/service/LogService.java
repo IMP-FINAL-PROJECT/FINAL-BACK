@@ -73,11 +73,27 @@ public class LogService {
             int weekCallFrequencyAll = 0; // 주 전화 빈도 총 합
             int weekCallDurationAll = 0; // 주 전화 시간 총 합
 
+            int hourCheck = 0; // 저장되지 않은 값 처리를 위한 시간 비교
+
             logDto.setId(user.getId());
 
             List<Log> logDay = logRepository.findByIdAndTimestamp(id, date);
 
             for (int i = 0; i < logDay.size(); i++) {
+
+                if(logDay.get(i).getHour() != hourCheck) {
+                    dayIlluminanceList.add(0);
+                    dayScreenDurationList.add(0);
+                    dayScreenFrequencyList.add(0);
+                    dayPedometerList.add(0);
+                    dayCallFrequencyList.add(0);
+                    dayCallDurationList.add(0);
+
+                    i -= 1;
+                    hourCheck += 1;
+
+                    continue;
+                }
 
                 // 조도 평균
                 for (int j = 0; j < logDay.get(i).getIlluminance().size(); j++) {
@@ -103,6 +119,8 @@ public class LogService {
 
                 // gps 좌표 값
                 gps.addAll(logDay.get(i).getGps());
+
+                hourCheck += 1;
 
             }
 
