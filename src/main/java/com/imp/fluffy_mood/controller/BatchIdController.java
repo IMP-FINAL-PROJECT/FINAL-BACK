@@ -17,12 +17,24 @@ public class BatchIdController {
 
     public BatchIdController(BatchIdService batchIdService) { this.batchIdService = batchIdService; }
 
-    @GetMapping("")
-    public ResponseEntity<Message> getBatchId(HttpServletRequest request, @RequestParam String id) {
+    @GetMapping("/id/{id}")
+    public ResponseEntity<Message> getBatchId(HttpServletRequest request, @PathVariable("id") String id) {
         log.debug("Accessed IP : {}", request.getRemoteAddr());
         log.debug("id : {}", id);
 
         ResponseEntity<Message> response = batchIdService.getBatchId(id);
+
+        log.debug("Data : {}", response.getBody());
+
+        return response;
+    }
+
+    @GetMapping("/number/{number}")
+    public ResponseEntity<Message> getBatchNumber(HttpServletRequest request, @PathVariable("number") int number) {
+        log.debug("Accessed IP : {}", request.getRemoteAddr());
+        log.debug("number : {}", number);
+
+        ResponseEntity<Message> response = batchIdService.getBatchNumber(number);
 
         log.debug("Data : {}", response.getBody());
 

@@ -20,12 +20,40 @@ public class BatchIdService {
 
         BatchId batchId = batchIdRepository.findById(id);
 
-        message.setStatus(StatusEnum.OK.getStatusCode());
-        message.setResult(true);
-        message.setMessage("Success");
-        message.setData(batchId);
+        if(batchId != null) {
+            message.setStatus(StatusEnum.OK.getStatusCode());
+            message.setResult(true);
+            message.setMessage("Success");
+            message.setData(batchId);
+        } else {
+            message.setStatus(StatusEnum.BAD_REQUEST.getStatusCode());
+            message.setResult(false);
+            message.setMessage("No Data");
+            message.setData(null);
+        }
 
         return ResponseEntity.ok(message);
 
+    }
+
+    public ResponseEntity<Message> getBatchNumber(int number) {
+
+        Message message = new Message();
+
+        BatchId batchNumber = batchIdRepository.findByNumber(number);
+
+        if(batchNumber != null) {
+            message.setStatus(StatusEnum.OK.getStatusCode());
+            message.setResult(true);
+            message.setMessage("Success");
+            message.setData(batchNumber);
+        } else {
+            message.setStatus(StatusEnum.BAD_REQUEST.getStatusCode());
+            message.setResult(false);
+            message.setMessage("No Data");
+            message.setData(null);
+        }
+
+        return ResponseEntity.ok(message);
     }
 }
