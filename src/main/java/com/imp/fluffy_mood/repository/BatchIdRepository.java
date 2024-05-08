@@ -9,4 +9,5 @@ import org.springframework.stereotype.Repository;
 public interface BatchIdRepository extends JpaRepository<BatchId, BatchIdPK> {
 
     BatchId findById(String id);
+    BatchId findByNumber(int number);
 }
