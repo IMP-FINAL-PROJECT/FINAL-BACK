@@ -71,6 +71,21 @@ public class Analysis {
     @Column(name = "night_step_count")
     private float nightStepCount;
 
+    @Column(name = "activity_score")
+    private float activityScore;
+
+    @Column(name = "phone_usage_score")
+    private float phoneUsageScore;
+
+    @Column(name = "illumination_exposure_score")
+    private float illuminationExposureScore;
+
+    @Column(name = "location_diversity_score")
+    private float locationDiversityScore;
+
+    @Column(name = "circadian_rhythm_score")
+    private float circadianRhythmScore;
+
     @Id
     @Column(name = "date", columnDefinition = "DATE", nullable = false)
     private LocalDate date;
@@ -93,6 +108,11 @@ public class Analysis {
                 .nightLightExposure(nightLightExposure)
                 .dayStepCount(dayStepCount)
                 .nightStepCount(nightStepCount)
+                .activityScore(activityScore)
+                .phoneUsageScore(phoneUsageScore)
+                .illuminationExposureScore(illuminationExposureScore)
+                .locationDiversityScore(locationDiversityScore)
+                .circadianRhythmScore(circadianRhythmScore)
                 .build();
     }
 }
