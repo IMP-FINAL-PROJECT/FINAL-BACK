@@ -15,7 +15,6 @@ public class HappinessDto {
     private String id;
     private int point;
     private LocalDate timestamp;
-    private int hour;
 
     public Happiness toEntity() {
         return Happiness.builder()
