@@ -62,6 +62,21 @@ public class AnalysisDto {
     @JsonProperty("night_step_count")
     private float nightStepCount;
 
+    @JsonProperty("activity_score")
+    private float activityScore;
+
+    @JsonProperty("phone_usage_score")
+    private float phoneUsageScore;
+
+    @JsonProperty("illumination_exposure_score")
+    private float illuminationExposureScore;
+
+    @JsonProperty("location_diversity_score")
+    private float locationDiversityScore;
+
+    @JsonProperty("circadian_rhythm_score")
+    private float circadianRhythmScore;
+
     private LocalDate date;
 
     public Analysis toEntity() {
@@ -82,6 +97,11 @@ public class AnalysisDto {
                 .nightLightExposure(nightLightExposure)
                 .dayStepCount(dayStepCount)
                 .nightStepCount(nightStepCount)
+                .activityScore(activityScore)
+                .phoneUsageScore(phoneUsageScore)
+                .illuminationExposureScore(illuminationExposureScore)
+                .locationDiversityScore(locationDiversityScore)
+                .circadianRhythmScore(circadianRhythmScore)
                 .build();
     }
 
