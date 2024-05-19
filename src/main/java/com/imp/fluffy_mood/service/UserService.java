@@ -13,7 +13,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -35,7 +38,7 @@ public class UserService {
 
             user.updateLastLogin();
 
-            if(userDto.getToken() != null && user.getToken() != userDto.getToken()) {
+            if (userDto.getToken() != null && user.getToken() != userDto.getToken()) {
                 user.updateToken(userDto.getToken());
             }
 
@@ -121,10 +124,10 @@ public class UserService {
     public ResponseEntity<Message> changeInfo(String id, UserDto userDto) {
 
         Message message = new Message();
-
         User user = jpaUserRepository.findById(id).orElse(null);
 
         if (user != null) {
+
 
             user.update(userDto);
 
@@ -179,15 +182,33 @@ public class UserService {
 
         if (user != null) {
 
-            Happiness happiness = happinessRepository.findTopByIdOrderByTimestampDesc(id);
+            LocalDate today = LocalDate.now();
+            LocalDate lastWeekStart = today.minusWeeks(1).plusDays(1);
+
+            List<Happiness> happinessWeek = happinessRepository.findByIdAndTimestampBetween(id, lastWeekStart, today);
+            List<Integer> pointList = new ArrayList<>();
 
             HomeDto homeDto = new HomeDto();
 
-            homeDto.setId(id);
+            for (int i = 0; i < happinessWeek.size(); i++) {
 
-            if (happiness != null) {
-                homeDto.setPoint(happiness.getPoint());
+                if(happinessWeek.get(i).getTimestamp().equals(lastWeekStart)) {
+                    pointList.add(happinessWeek.get(i).getPoint());
+                } else {
+                    pointList.add(0);
+                    i -= 1;
+                }
+
+                lastWeekStart = lastWeekStart.plusDays(1);
             }
+
+            while(pointList.size() != 7) {
+                pointList.add(0);
+            }
+
+            homeDto.setId(id);
+            homeDto.setPointList(pointList);
+            homeDto.setPoint(pointList.get(pointList.size() - 1));
 
             message.setStatus(StatusEnum.OK.getStatusCode());
             message.setResult(true);

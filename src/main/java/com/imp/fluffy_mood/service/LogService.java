@@ -124,6 +124,17 @@ public class LogService {
 
             }
 
+            while(hourCheck != 24) {
+                dayIlluminanceList.add(0);
+                dayScreenDurationList.add(0);
+                dayScreenFrequencyList.add(0);
+                dayPedometerList.add(0);
+                dayCallFrequencyList.add(0);
+                dayCallDurationList.add(0);
+
+                hourCheck += 1;
+            }
+
             dayLogDto.setIlluminance(dayIlluminanceList);
             dayLogDto.setPedometer(dayPedometerSum);
             dayLogDto.setPedometerList(dayPedometerList);
@@ -203,6 +214,16 @@ public class LogService {
 
             }
 
+            // 조도 리스트의 크기가 7이 아니면 나머지 리스트의 크기도 7이 아님
+            while(weekIlluminanceList.size() != 7) {
+                weekIlluminanceList.add(0);
+                weekPedometerList.add(0);
+                weekScreenDurationList.add(0);
+                weekScreenFrequencyList.add(0);
+                weekCallFrequencyList.add(0);
+                weekCallDurationList.add(0);
+            }
+
             weekLogDto.setIlluminance(weekIlluminanceList);
             weekLogDto.setPedometerList(weekPedometerList);
             weekLogDto.setScreenDurationList(weekScreenDurationList);
@@ -217,7 +238,6 @@ public class LogService {
 
             logDto.setDay(dayLogDto);
             logDto.setWeek(weekLogDto);
-
             logDto.setTimestamp(date);
 
             message.setStatus(StatusEnum.OK.getStatusCode());
