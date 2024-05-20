@@ -25,6 +25,9 @@ public class Happiness {
     @Column(name = "point", nullable = false)
     private int point;
 
+    @Column(name = "ai_analysis")
+    private String aiAnalysis;
+
     @Id
     private LocalDate timestamp;
 
@@ -32,6 +35,7 @@ public class Happiness {
         return HappinessDto.builder()
                 .id(id)
                 .point(point)
+                .aiAnalysis(aiAnalysis)
                 .timestamp(timestamp)
                 .build();
     }
