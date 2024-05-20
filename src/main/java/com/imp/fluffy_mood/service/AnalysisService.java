@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Service
@@ -41,6 +42,20 @@ public class AnalysisService {
             }
 
             AnalysisDto analysisDto = analysis.toDto();
+
+            int dayTimeCount = analysisDto.getDayTimeCount();
+            int nightTimeCount = analysisDto.getNightTimeCount();
+
+            analysisDto.setDayPhoneUseDuration(analysisDto.getDayPhoneUseDuration() * dayTimeCount);
+            analysisDto.setNightPhoneUseDuration(analysisDto.getNightPhoneUseDuration() * nightTimeCount);
+            analysisDto.setDayPhoneUseFrequency(analysisDto.getDayPhoneUseFrequency() + dayTimeCount);
+            analysisDto.setNightPhoneUseFrequency(analysisDto.getNightPhoneUseFrequency() * nightTimeCount);
+            analysisDto.setDayCallUseFrequency(analysisDto.getDayCallUseFrequency() * dayTimeCount);
+            analysisDto.setNightCallUseFrequency(analysisDto.getNightCallUseFrequency() * nightTimeCount);
+            analysisDto.setDayCallUseDuration(analysisDto.getDayCallUseDuration() * dayTimeCount);
+            analysisDto.setNightCallUseDuration(analysisDto.getNightCallUseDuration() * nightTimeCount);
+            analysisDto.setDayLightExposure(analysisDto.getDayLightExposure() * dayTimeCount);
+            analysisDto.setNightLightExposure(analysisDto.getNightLightExposure() * nightTimeCount);
 
             analysisDto.setDate(date);
 

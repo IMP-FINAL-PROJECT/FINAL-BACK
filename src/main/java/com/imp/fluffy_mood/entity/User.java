@@ -61,7 +61,7 @@ public class User {
         if(userDto.getGender() != null) {
             this.gender = userDto.getGender();
         }
-        if(userDto.getAddress() != null) {
+        if(!userDto.getAddress().isEmpty()) {
             this.address = userDto.getAddress();
         }
 

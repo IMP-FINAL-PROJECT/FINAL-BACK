@@ -1,5 +1,6 @@
 package com.imp.fluffy_mood.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.imp.fluffy_mood.entity.Analysis;
 import lombok.*;
@@ -33,10 +34,10 @@ public class AnalysisDto {
     private float nightPhoneUseFrequency;
 
     @JsonProperty("day_phone_use_duration")
-    private float dayPhoneUseDuration;
+    private int dayPhoneUseDuration;
 
     @JsonProperty("night_phone_use_duration")
-    private float nightPhoneUseDuration;
+    private int nightPhoneUseDuration;
 
     @JsonProperty("day_call_use_frequency")
     private float dayCallUseFrequency;
@@ -77,6 +78,12 @@ public class AnalysisDto {
     @JsonProperty("circadian_rhythm_score")
     private float circadianRhythmScore;
 
+    @JsonIgnore
+    private int dayTimeCount;
+
+    @JsonIgnore
+    private int nightTimeCount;
+
     private LocalDate date;
 
     public Analysis toEntity() {
@@ -102,6 +109,8 @@ public class AnalysisDto {
                 .illuminationExposureScore(illuminationExposureScore)
                 .locationDiversityScore(locationDiversityScore)
                 .circadianRhythmScore(circadianRhythmScore)
+                .dayTimeCount(dayTimeCount)
+                .nightTimeCount(nightTimeCount)
                 .build();
     }
 
