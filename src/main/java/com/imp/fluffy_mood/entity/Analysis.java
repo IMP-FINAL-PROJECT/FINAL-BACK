@@ -42,10 +42,10 @@ public class Analysis {
     private float nightPhoneUseFrequency;
 
     @Column(name = "day_phone_use_duration")
-    private float dayPhoneUseDuration;
+    private int dayPhoneUseDuration;
 
     @Column(name = "night_phone_use_duration")
-    private float nightPhoneUseDuration;
+    private int nightPhoneUseDuration;
 
     @Column(name = "day_call_use_frequency")
     private float dayCallUseFrequency;
@@ -86,6 +86,12 @@ public class Analysis {
     @Column(name = "circadian_rhythm_score")
     private float circadianRhythmScore;
 
+    @Column(name = "day_time_count")
+    private int dayTimeCount;
+
+    @Column(name = "night_time_count")
+    private int nightTimeCount;
+
     @Id
     @Column(name = "date", columnDefinition = "DATE", nullable = false)
     private LocalDate date;
@@ -113,6 +119,8 @@ public class Analysis {
                 .illuminationExposureScore(illuminationExposureScore)
                 .locationDiversityScore(locationDiversityScore)
                 .circadianRhythmScore(circadianRhythmScore)
+                .dayTimeCount(dayTimeCount)
+                .nightTimeCount(nightTimeCount)
                 .build();
     }
 }
