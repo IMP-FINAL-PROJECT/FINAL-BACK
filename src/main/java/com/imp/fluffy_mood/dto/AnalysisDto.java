@@ -86,6 +86,9 @@ public class AnalysisDto {
 
     private LocalDate date;
 
+    @JsonProperty("ai_analysis")
+    private String aiAnalysis;
+
     public Analysis toEntity() {
         return Analysis.builder()
                 .id(id)

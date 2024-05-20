@@ -7,6 +7,7 @@ import com.imp.fluffy_mood.enums.StatusEnum;
 import com.imp.fluffy_mood.repository.HappinessRepository;
 import com.imp.fluffy_mood.repository.JpaUserRepository;
 
+import com.imp.fluffy_mood.repository.mapping.HappinessMapping;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.ResponseEntity;
@@ -15,7 +16,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -185,7 +185,7 @@ public class UserService {
             LocalDate today = LocalDate.now();
             LocalDate lastWeekStart = today.minusWeeks(1).plusDays(1);
 
-            List<Happiness> happinessWeek = happinessRepository.findByIdAndTimestampBetween(id, lastWeekStart, today);
+            List<HappinessMapping> happinessWeek = happinessRepository.findByIdAndTimestampBetween(id, lastWeekStart, today);
             List<Integer> pointList = new ArrayList<>();
 
             HomeDto homeDto = new HomeDto();

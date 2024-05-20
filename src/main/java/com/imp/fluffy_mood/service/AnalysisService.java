@@ -6,20 +6,22 @@ import com.imp.fluffy_mood.entity.Message;
 import com.imp.fluffy_mood.entity.User;
 import com.imp.fluffy_mood.enums.StatusEnum;
 import com.imp.fluffy_mood.repository.AnalysisRepository;
+import com.imp.fluffy_mood.repository.HappinessRepository;
 import com.imp.fluffy_mood.repository.JpaUserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class AnalysisService {
 
     private final AnalysisRepository analysisRepository;
+    private final HappinessRepository happinessRepository;
     private final JpaUserRepository jpaUserRepository;
 
     public ResponseEntity<Message> analysis(String id, LocalDate date) {
@@ -58,6 +60,10 @@ public class AnalysisService {
             analysisDto.setNightLightExposure(analysisDto.getNightLightExposure() * nightTimeCount);
 
             analysisDto.setDate(date);
+
+            Optional<String> aiAnalysis = happinessRepository.findByIdAndTimestamp(id, date);
+
+            analysisDto.setAiAnalysis(aiAnalysis.orElse(null));
 
             message.setStatus(StatusEnum.OK.getStatusCode());
             message.setResult(true);
